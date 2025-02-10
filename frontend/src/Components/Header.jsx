@@ -6,7 +6,7 @@ import { useGSAP } from '@gsap/react';
 
 const Header = () => {
 
-  const [toggeleMenu, setToggelMenu] = useState(true)
+  const [toggeleMenu, setToggelMenu] = useState(false)
   const [activeNav, setActiveNav] = useState('home')
 
   const menuRef = useRef(null)
@@ -42,7 +42,7 @@ const Header = () => {
   return (
     <>
       <Router>
-        <header className='w-full bg-white backdrop-blur-lg dark:text-white dark:bg-black select-none'>
+        <header className='hidden md:block w-full bg-white backdrop-blur-lg dark:text-white dark:bg-black select-none'>
           <nav className='flex justify-between items-center py-4 px-5 h-[4.5rem]  max-w-[65rem] mx-auto'>
             {/* TODO */}
             <li ref={logoRef} className='list-none text-lg font-medium'><HashLink to="/#home">Abdul Hamid</HashLink></li>
@@ -101,12 +101,12 @@ const Header = () => {
         </header >
 
         {/* Mobile View */}
-        < div ref={menuRef} className="fixed md:hidden z-10 w-full bottom-0 left-0 bg-white dark:bg-black pt-10 pb-2  rounded-t-xl" >
-          <ul className='grid grid-cols-3 gap-y-5   justify-items-center align-items-center space-x-7 px-7'>
+        < div ref={menuRef} className="fixed md:hidden z-10 w-full bottom-0 left-0 bg-white dark:bg-black pt-10 pb-2 rounded-t-xl light:inset-shadow-sm light:inset-shadow-gray-l " >
+          <ul className='grid grid-cols-3 gap-y-5  justify-items-center align-items-center space-x-7 px-7 text-gray-d'>
             {/* Home */}
             <HashLink
               to='/#home'
-              className={`text-base m-0 font-medium flex flex-col items-center text-white dark:text-gray-l ${activeNav === 'home' && 'text-white dark:text-white'}`}
+              className={`text-base m-0 font-medium flex flex-col items-center ${activeNav === 'home' && 'text-black dark:text-white'}`}
               onClick={() => setActiveNav('home')}>
               <i className="ri-home-5-line text-xl"></i> Home
             </HashLink>
@@ -114,7 +114,7 @@ const Header = () => {
             {/* About */}
             <HashLink
               to='/#about'
-              className={`text-base m-0 font-medium flex flex-col items-center text-white dark:text-gray-l ${activeNav === 'about' && 'text-white dark:text-white'}`}
+              className={`text-base m-0 font-medium flex flex-col items-center  ${activeNav === 'about' && 'text-black dark:text-white'}`}
               onClick={() => setActiveNav('about')}>
               <i className="ri-user-line text-xl"></i> About
             </HashLink>
@@ -122,7 +122,7 @@ const Header = () => {
             {/* Skills */}
             <HashLink
               to='/#skills'
-              className={`text-base m-0 font-medium flex flex-col items-center text-white dark:text-gray-l ${activeNav === 'skills' && 'text-white dark:text-white'}`}
+              className={`text-base m-0 font-medium flex flex-col items-center  ${activeNav === 'skills' && 'text-black dark:text-white'}`}
               onClick={() => setActiveNav('skills')}>
               <i className="ri-file-chart-line text-xl"></i> Skills
             </HashLink>
@@ -130,7 +130,7 @@ const Header = () => {
             {/* Services */}
             <HashLink
               to='/#services'
-              className={`text-base m-0 font-medium flex flex-col items-center text-white dark:text-gray-l ${activeNav === 'services' && 'text-white dark:text-white'}`}
+              className={`text-base m-0 font-medium flex flex-col items-center  ${activeNav === 'services' && 'text-black dark:text-white'}`}
               onClick={() => setActiveNav('services')}>
               <i className="ri-suitcase-fill text-xl"></i> Services
             </HashLink>
@@ -138,7 +138,7 @@ const Header = () => {
             {/* Portfolio */}
             <HashLink
               to='/#portfolio'
-              className={`text-base m-0 font-medium flex flex-col items-center text-white dark:text-gray-l ${activeNav === 'portfolio' && 'text-white dark:text-white'}`}
+              className={`text-base m-0 font-medium flex flex-col items-center  ${activeNav === 'portfolio' && 'text-black dark:text-white'}`}
               onClick={() => setActiveNav('portfolio')}>
               <i className="ri-image-2-line text-xl"></i> Portfolio
             </HashLink>
@@ -146,7 +146,7 @@ const Header = () => {
             {/* Contact */}
             <HashLink
               to='/#contact'
-              className={`text-base m-0 font-medium flex flex-col items-center text-white dark:text-gray-l ${activeNav === 'contact' && 'text-white dark:text-white'}`}
+              className={`text-base m-0 font-medium flex flex-col items-center  ${activeNav === 'contact' && 'text-black dark:text-white'}`}
               onClick={() => setActiveNav('contact')}>
               <i className="ri-send-plane-2-line text-xl"></i> Contact
             </HashLink>
@@ -161,7 +161,7 @@ const Header = () => {
         {/* Menu Button Opener */}
         < div className="" >
           <div className="fixed md:hidden bottom-0 w-full bg-white dark:bg-black flex justify-between md:hidden rounded-t-xl p-4">
-            <p className='text-xl'>Abdul Hamid</p>
+            <p className='text-xl font-medium'>Abdul Hamid</p>
             <div className="" onClick={() => setToggelMenu(true)}>
               <i className="ri-dashboard-fill text-2xl"></i>
             </div>

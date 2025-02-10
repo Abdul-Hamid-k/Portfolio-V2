@@ -7,7 +7,7 @@ const App = () => {
     <div className='bg-white dark:bg-black dark:text-white text-gray-d'>
       <Header />
 
-      <main className='bg-white dark:bg-gray-d dark:text-white text-black'>
+      <main className='bg-white dark:bg-gray-dd dark:text-white text-black'>
         <Home />
       </main>
 

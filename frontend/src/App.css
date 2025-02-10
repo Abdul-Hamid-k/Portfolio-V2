@@ -33,3 +33,10 @@
 		border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
 	}
 }
+
+@media (max-width: 767px) {
+	.home__img {
+		width: 220px;
+		height: 220px;
+	}
+}
