@@ -10,12 +10,13 @@ const HeroUserImg = () => {
   const gitIconRef = useRef(null)
 
   useGSAP(() => {
+
     gsap.from(reactIconRef.current, {
       duration: 1,
-      y: 250,
-      x: 250,
+      y: 150,
+      x: 150,
       opacity: 0,
-      delay: 1
+      delay: 1,
     })
 
     gsap.from(nodeIconRef.current, {
@@ -47,14 +48,14 @@ const HeroUserImg = () => {
   return (
     <div className='relative w-fit md:w-auto h-fit p-3 overflow-hidden'>
       {/* react Icon */}
-      <div ref={reactIconRef} className="absolute rounded-full backdrop-blur p-2 bg-white/80 bottom-3 left-15 h-12 w-12">
+      <div ref={reactIconRef} className="absolute rounded-full backdrop-blur p-2 bg-white/80 bottom-4 left-11 h-12 w-12">
         <img
           className='object-cover object-fit'
           src="https://imgs.search.brave.com/FihthY8hMrxn60mcDaOWs6cpLeU5olROkI4hra30AuQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9h/L2E3L1JlYWN0LWlj/b24uc3Zn" alt="" />
       </div>
 
       {/* node icon */}
-      <div ref={nodeIconRef} className="absolute rounded-full backdrop-blur p-2 bg-white/70 top-1 right-12 h-12 w-12">
+      <div ref={nodeIconRef} className="absolute rounded-full backdrop-blur p-2 bg-white/70 top-2 md:top-3 right-12 md:right-14 h-12 w-12">
         <img
           className='object-cover object-fit'
           src="https://imgs.search.brave.com/DZqhRgeja0LEjMFzA0X2-Qs5Ak3QhrSO28PvuhFRmvg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMtMDAuaWNvbmR1/Y2suY29tL2Fzc2V0/cy4wMC9ub2RlLWpz/LWljb24tNDU0eDUx/Mi1uenRvZngxNy5w/bmc" alt="" />
