@@ -10,12 +10,13 @@ const HeroUserImg = () => {
   const gitIconRef = useRef(null)
 
   useGSAP(() => {
+
     gsap.from(reactIconRef.current, {
       duration: 1,
-      y: 250,
-      x: 250,
+      y: 150,
+      x: 150,
       opacity: 0,
-      delay: 1
+      delay: 1,
     })
 
     gsap.from(nodeIconRef.current, {
