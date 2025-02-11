@@ -4,9 +4,12 @@ import './index.css'
 import App from './App.jsx'
 import 'remixicon/fonts/remixicon.css'
 import './App.css'
+import UserContext, { UserDataContext } from './context/UserContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <UserContext>
+      <App />
+    </UserContext>
   </StrictMode>,
 )
