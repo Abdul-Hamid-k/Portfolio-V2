@@ -42,7 +42,7 @@ const Header = () => {
   return (
     <>
       <Router>
-        <header className='hidden md:block w-full bg-d-primary backdrop-blur-lg text-l-primary dark:text-d-primary dark:bg-black select-none'>
+        <header className='hidden fixed md:block w-full z-10 bg-d-primary/50 backdrop-blur-lg text-l-primary dark:text-d-primary dark:bg-black/50 select-none'>
           <nav className='flex justify-between items-center py-4 px-5 h-[4.5rem]  max-w-[65rem] mx-auto'>
             {/* TODO */}
             <li ref={logoRef} className='list-none text-lg font-medium'><HashLink to="/#home">Abdul Hamid</HashLink></li>
@@ -101,7 +101,7 @@ const Header = () => {
         </header >
 
         {/* Mobile View */}
-        < div ref={menuRef} className="fixed md:hidden z-10 w-full bottom-0 left-0 bg-white dark:bg-black pt-10 pb-2 rounded-t-xl light:inset-shadow-sm light:inset-shadow-gray-l " >
+        < div ref={menuRef} className="fixed md:hidden z-10 w-full bottom-0 left-0 bg-white/50 dark:bg-black/50 backdrop-blur-lg pt-10 pb-2 rounded-t-xl light:inset-shadow-sm light:inset-shadow-gray-l " >
           <ul className='grid grid-cols-3 gap-y-5  justify-items-center align-items-center space-x-7 px-7 text-l-primary dark:text-d-secondary'>
             {/* Home */}
             <HashLink

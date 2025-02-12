@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import AbdulImage from "../assets/AbdulimgSm.jpg"
+import Image from "../../assets/AbdulimgSm.jpg"
 
 const HeroUserImg = () => {
   const reactIconRef = useRef(null)
@@ -76,7 +76,7 @@ const HeroUserImg = () => {
       </div>
 
       <div className="home__img overflow-hidden">
-        <img className='h-full object-fit object-cover' src={AbdulImage} alt="" />
+        <img className='h-full object-fit object-cover' src={Image} alt="" />
       </div>
     </div>
   )
