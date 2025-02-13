@@ -5,6 +5,7 @@ import axios from 'axios'
 import { UserDataContext } from './context/UserContext'
 import About from './Components/about/About'
 import Skills from './Components/skills/Skills'
+import Services from './Components/services/Services'
 
 const App = () => {
   const { user, setUser } = useContext(UserDataContext)
@@ -33,6 +34,7 @@ const App = () => {
         <Home />
         <About />
         <Skills />
+        <Services />
 
       </main>
 
