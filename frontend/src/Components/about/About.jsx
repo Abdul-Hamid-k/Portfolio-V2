@@ -10,7 +10,7 @@ const About = () => {
     <section id="about" className='min-h-[42rem] py-[5rem] px-3 text-gray-dd'>
 
       <h2 className='text-4xl font-medium text-center text-l-primary dark:text-d-primary'>About Me</h2>
-      <h3 className='text-sm text-center text-l-secondary dark:text-d-secondary'>My Introduction</h3>
+      <h3 className='text-sm text-center text-l-secondary dark:text-d-secondary mt-1'>My Introduction</h3>
 
       <div className="grid grid-cols-1 gap-14  lg:grid-cols-2 justify-items-center mt-[4rem]">
         <img
