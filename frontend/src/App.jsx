@@ -4,6 +4,7 @@ import Home from './Components/home/Home'
 import axios from 'axios'
 import { UserDataContext } from './context/UserContext'
 import About from './Components/about/About'
+import Skills from './Components/skills/Skills'
 
 const App = () => {
   const { user, setUser } = useContext(UserDataContext)
@@ -31,6 +32,7 @@ const App = () => {
       <main className='max-w-[65rem] mx-auto '>
         <Home />
         <About />
+        <Skills />
 
       </main>
 

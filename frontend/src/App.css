@@ -36,7 +36,7 @@
 
 @media (max-width: 767px) {
 	.home__img {
-		width: 260px;
+		width: auto;
 		height: 260px;
 	}
 }
