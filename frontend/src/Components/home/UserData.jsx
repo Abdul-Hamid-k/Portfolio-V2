@@ -10,10 +10,10 @@ const UserData = () => {
 
         <div className="flex">
           <div className="h-[0.125rem] mt-3 mr-2 bg-l-primary dark:bg-d-primary w-20 "></div>
-          <h3 className='text-lg'>{user.summaryHeading}</h3>
+          <h3 className='text-lg'>{user.homeHeading}</h3>
         </div>
 
-        <h3 className='mt-3 text-sm text-l-secondary dark:text-d-secondary'>{user.summaryContent}</h3>
+        <h3 className='mt-3 text-sm text-l-secondary dark:text-d-secondary'>{user.homeContent}</h3>
 
         {/* TODO - link button */}
         <button

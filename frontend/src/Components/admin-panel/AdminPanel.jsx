@@ -17,7 +17,7 @@ const AdminPanel = () => {
         <SideMenu
           isSidemenuOpen={isSidemenuOpen}
           setIsSidemenuOpen={setIsSidemenuOpen} />
-        <div className="sm:ml-[14rem] dark:bg-l-secondary bg-d-secondary/12 w-full h-screen m-5 rounded-3xl">
+        <div className="sm:ml-[10rem] md:ml-[14rem] w-full m-5 ">
           <Outlet />
         </div>
       </div>
