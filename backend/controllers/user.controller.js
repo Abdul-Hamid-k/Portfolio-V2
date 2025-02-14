@@ -50,7 +50,6 @@ export const loginUser = async (req, res) => {
 }
 
 export const logoutUser = (req, res) => {
-  res.removeCookies('token');
-  res.json({ message: "Logged out" });
+  res.clearCookie('token');
+  res.status(200).json({ message: "Logged out" });
 }
-
