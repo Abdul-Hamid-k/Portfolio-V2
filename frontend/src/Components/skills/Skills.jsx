@@ -27,7 +27,7 @@ const Skills = () => {
                   <>
                     {skill.category.toLowerCase() === category.toLowerCase() && (
                       <div key={skill.skillName} className="flex gap-1 w-[8.5rem] text-l-primary dark:text-d-primary">
-                        <i class="ri-verified-badge-line"></i>
+                        <i className="ri-verified-badge-line"></i>
                         <div className="">
                           <h3 className="capitalize">{skill.skillName}</h3>
                           <h4 className="text-xs text-l-secondary dark:text-d-secondary capitalize">{skill.skillLevel}</h4>

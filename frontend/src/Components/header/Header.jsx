@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router';
 import { HashLink } from 'react-router-hash-link';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -147,7 +146,7 @@ const Header = () => {
             to='/#contact'
             className={`text-base m-0 font-medium flex flex-col items-center  ${activeNav === 'contact' && 'text-l-primary dark:text-d-primary'}`}
             onClick={() => setActiveNav('contact')}>
-            <i className="ri-send-plane-2-line text-xl"></i> Contact
+            <i className="ri-send-plane-fill text-xl"></i> Contact
           </HashLink>
 
 

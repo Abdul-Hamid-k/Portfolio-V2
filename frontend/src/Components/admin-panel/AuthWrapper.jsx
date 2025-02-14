@@ -1,7 +1,11 @@
 import React from 'react'
 
-const AuthWrapper = (children) => {
-  return children
+const AuthWrapper = ({ children }) => {
+  return (
+    <>
+      {children}
+    </>
+  )
 
 }
 
