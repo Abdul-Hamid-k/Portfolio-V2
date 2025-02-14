@@ -14,5 +14,6 @@ router.post(
   body('password').notEmpty().withMessage('Password is required'),
 ], loginUser)
 
+router.post('/logout', logoutUser)
 
 export default router
