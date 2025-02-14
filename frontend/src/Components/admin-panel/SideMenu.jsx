@@ -63,9 +63,9 @@ const SideMenu = (props) => {
 
   const navigate = useNavigate()
   return (
-    <div ref={sidePanelRef} className='absolute -translate-x-full sm:translate-x-0 sm:fixed h-full '>
+    <div ref={sidePanelRef} className='bg-d-primary dark:bg-black absolute -translate-x-full sm:translate-x-0 sm:fixed h-full '>
 
-      <div ref={element => { menuRef = element }} className=' dark:bg-black backdrop-blur-2xl px-5 py-5 h-[calc(100%)] w-[13.5rem] flex flex-col gap-5'>
+      <div ref={element => { menuRef = element }} className=' dark:bg-black backdrop-blur-2xl px-5 py-5 h-[calc(100%)] w-[14rem] sm:w-[10rem] md:w-[13.5rem] flex flex-col gap-5'>
 
         <div
           className={`cursor-pointer w-fit font-medium  ${activePanle == 'home' ? 'text-l-primary dark:text-d-primary' : 'text-l-secondary hover:text-l-primary dark:text-d-secondary dark:hover:text-d-primary'}`}
