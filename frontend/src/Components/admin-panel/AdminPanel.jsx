@@ -5,7 +5,7 @@ import SideMenu from './SideMenu'
 
 const AdminPanel = () => {
   const [isSidemenuOpen, setIsSidemenuOpen] = useState(false)
-  console.log(isSidemenuOpen)
+  // console.log(isSidemenuOpen)
 
   return (
     <div className='bg-d-primary text-l-primary dark:bg-black dark:text-d-primary min-h-screen'>

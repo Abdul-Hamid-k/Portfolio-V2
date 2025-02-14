@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router'
 import { UserDataContext } from '../../context/UserContext'
 import axios from 'axios'
 
-const AuthWrapper = ({ children }) => {
+const LoginWrapper = ({ children }) => {
 
   const token = localStorage.getItem('token')
-  // console.log(token)
+  console.log(token)
 
   const [isLoading, setIsLoading] = useState(true)
 
@@ -16,26 +16,21 @@ const AuthWrapper = ({ children }) => {
 
   useEffect(() => {
     setIsLoading(true)
-    if (!token) {
-      navigate('/admin-panel-login')
-    }
 
     axios.get(`${import.meta.env.VITE_API_BASE_URL}/user`).then(res => {
       // console.log(res)
       if (res.status === 200) {
         setUser(res.data.user)
         setIsLoading(false)
+        navigate('/admin-panel/')
       }
     }).catch(err => {
       localStorage.removeItem('token')
       navigate('/admin-panel-login')
       console.error('Error fetching user data:', err)
       setUser(null)
-      throw new Error('Invalid token')
     })
   }, [])
-
-
 
 
 
@@ -55,4 +50,4 @@ const AuthWrapper = ({ children }) => {
 
 }
 
-export default AuthWrapper
+export default LoginWrapper

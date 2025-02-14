@@ -3,7 +3,7 @@ import React from "react";
 const ScrollDown = () => {
   return (
     <div className="hidden md:flex md:ml-[4.5rem] mt-3 lg:ml-[5.25rem]">
-      <a href="#about" className="flex justify-center items-center stroke-l-primary dark:stroke-d-primary stroke-l-primary dark:stroke-d-primary">
+      <a href="#about" className="flex justify-center items-center stroke-l-primary dark:stroke-d-primary">
         <svg
           width="32px"
           height="32px"

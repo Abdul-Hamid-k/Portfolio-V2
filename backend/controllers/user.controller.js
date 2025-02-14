@@ -3,8 +3,17 @@ import { validationResult } from 'express-validator'
 import { resetPassword } from '../services/resetPassword.service.js';
 
 export const getUserDetails = async (req, res) => {
-  const user = await UserModel.find({})
-  return res.status(200).json({ user });
+  // console.log(res.user)
+  try {
+    const user = await UserModel.find({})
+    // console.log(user)
+    return res.status(200).json({ message: "profile", user: user[0] });
+
+  } catch (err) {
+    console.error(err)
+    return res.status(500).json({ message: "Server Error" });
+  }
+
 }
 
 export const loginUser = async (req, res) => {
@@ -14,7 +23,7 @@ export const loginUser = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   const { email, password } = req.body;
-  console.log(email, password);
+  // console.log(email, password);
 
   if (!email || !password) {
     return res.status(400).json({ message: "Please provide email and password" });
@@ -33,6 +42,7 @@ export const loginUser = async (req, res) => {
   }
 
   const token = await user.generateAuthToken();
+  delete user.password
   res.user = user;
   res.cookie('token', token);
 

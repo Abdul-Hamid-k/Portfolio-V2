@@ -7,7 +7,7 @@ const Skills = () => {
   // const frontendSkills = user.skills.filter(obj => obj.category === 'frontend')
   // const backendSkills = user.skills.filter(obj => obj.category === 'backend')
 
-  console.log(user?.skills, skillCategories)
+  // console.log(user?.skills, skillCategories)
 
   return (
     <section id="skills" className='min-h-[42rem] py-[5rem] px-3 text-gray-dd'>

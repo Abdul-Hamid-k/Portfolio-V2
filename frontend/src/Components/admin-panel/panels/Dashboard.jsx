@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { UserDataContext } from '../../../context/UserContext'
 
 const Dashboard = () => {
   const [username, setUsername] = useState('')
@@ -9,6 +10,8 @@ const Dashboard = () => {
   const [heading, setHeading] = useState('')
   const [content, setcontent] = useState('')
 
+  const { user, setUser } = useContext(UserDataContext)
+
   const imagePreviewHandler = (e) => {
     console.log(e.target.files)
     setUserImg(URL.createObjectURL(e.target.files[0]));
@@ -18,6 +21,7 @@ const Dashboard = () => {
     e.preventDefault()
   }
 
+  console.log(user)
 
 
   return (

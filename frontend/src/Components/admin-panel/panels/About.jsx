@@ -7,7 +7,7 @@ const About = () => {
   const [resumeFile, setResumeFile] = useState('')
 
   const resumePreviewHandler = (e) => {
-    console.log(e.target.files)
+    // console.log(e.target.files)
     setResumeFile(URL.createObjectURL(e.target.files[0]));
   }
 
