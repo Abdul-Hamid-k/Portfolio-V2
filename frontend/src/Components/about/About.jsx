@@ -33,7 +33,7 @@ const About = () => {
             {/* Completed badge */}
             {/* TODO */}
             <div className="border-[0.015rem] w-full rounded-md px-3 py-4  md:py-4 md:px-5 lg:px-6 border-l-secondary dark:border-d-secondary flex flex-col items-center gap-1">
-              <i class="ri-suitcase-fill text-2xl"></i>
+              <i className="ri-suitcase-fill text-2xl"></i>
               <h4 className="font-medium text-sm md:text-base">Completed</h4>
               <h5 className="text-xs text-l-secondary dark:text-d-secondary">{`4 Projects`}</h5>
 
