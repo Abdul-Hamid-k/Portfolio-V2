@@ -20,7 +20,7 @@ const SideMenu = (props) => {
     })
   }, [])
 
-  console.log(props.isSidemenuOpen)
+  // console.log(props.isSidemenuOpen)
 
 
   useGSAP(() => {
@@ -62,6 +62,7 @@ const SideMenu = (props) => {
   }, [])
 
   const navigate = useNavigate()
+  
   return (
     <div ref={sidePanelRef} className='bg-d-primary dark:bg-black absolute -translate-x-full sm:translate-x-0 sm:fixed h-full '>
 

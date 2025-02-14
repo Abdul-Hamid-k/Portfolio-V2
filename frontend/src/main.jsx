@@ -17,13 +17,14 @@ import Skills from './Components/admin-panel/panels/Skills.jsx'
 import Services from './Components/admin-panel/panels/Services.jsx'
 import Portfolio from './Components/admin-panel/panels/Portfolio.jsx'
 import Contact from './Components/admin-panel/panels/Contact.jsx'
+import LoginWrapper from './Components/admin-panel/LoginWrapper.jsx'
 
 const router = createBrowserRouter([{
   path: '/',
   element: <App />,
 }, {
   path: '/admin-panel-login',
-  element: <Login />
+  element: <AuthWrapper> <Login /> </AuthWrapper>
 }, {
   path: '/admin-panel',
   element: <AuthWrapper> <AdminPanel /> </AuthWrapper>,

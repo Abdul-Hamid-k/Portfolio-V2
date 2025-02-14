@@ -1,19 +1,44 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import axios from 'axios'
+import { UserDataContext } from '../../context/UserContext'
+import { useNavigate } from 'react-router'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  const handleLogin = (e) => {
+  const { user, setUser } = useContext(UserDataContext)
+  const navigate = useNavigate()
+
+  const handleLogin = async (e) => {
     e.preventDefault()
     console.log(email, password)
 
-    // setEmail('')
-    // setPassword('')
+    axios.post(`${import.meta.env.VITE_API_BASE_URL}/user/login`,
+      { email: email.toLowerCase(), password: password }).then(res => {
+        if (res.status === 200) {
+          console.log(res.data.user)
+          setUser(res.data.user)
+          localStorage.setItem('token', res.data.token)
+          navigate('/admin-panel/')
+
+        } else {
+          setErrorMessage(res.data.message)
+          setEmail('')
+          setPassword('')
+        }
+      }).catch(err => {
+        setErrorMessage("Invalid Credantials")
+        console.log(err)
+        setEmail('')
+        setPassword('')
+      })
+
   }
 
   return (
+    // TODO: AUTH WRAPPER
     <div className='min-h-screen w-full bg-d-primary dark:bg-black text-l-primary dark:text-d-primary flex justify-center items-center '>
 
       <form onSubmit={handleLogin} className="bg-d-primary dark:bg-l-secondary w-[90%] sm:w-[30rem] px-5 py-8 rounded-xl shadow-xl">
@@ -39,7 +64,7 @@ const Login = () => {
             type="password" />
         </div>
 
-        {errorMessage && <p className="text-red-500 text-xs">{errorMessage}</p>}
+        <p className="text-red-600 text-xs mt-2">{errorMessage}</p>
         <button
           type='submit'
           className='bg-l-primary dark:bg-d-secondary dark:hover:bg-d-primary duration-500 transition-all text-d-primary dark:text-l-primary w-full px-5 py-3 mt-10 rounded-lg font-medium text-xl cursor-pointer'>LOGIN</button>

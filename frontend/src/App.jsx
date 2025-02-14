@@ -10,17 +10,21 @@ import Services from './Components/services/Services'
 const App = () => {
   const { user, setUser } = useContext(UserDataContext)
 
+  // console.log(user)
+
   useEffect(() => {
     const GetUserData = async () => {
-      console.log(import.meta.env.VITE_API_BASE_URL + '/user')
+      // console.log(import.meta.env.VITE_API_BASE_URL + '/user')
       await axios.get(import.meta.env.VITE_API_BASE_URL + '/user')
         .then((res) => {
           if (res.status === 200) {
-            setUser(res.data.user[0])
-            console.log('User data fetched successfully:', res.data.user[0])
+            setUser(res.data.user)
+            // console.log('User data fetched successfully:', res.data.user)
           } else {
             console.log('Error fetching user data:', res.status)
           }
+        }).catch(err => {
+          console.log('Error fetching user :', err)
         })
     }
     GetUserData()
