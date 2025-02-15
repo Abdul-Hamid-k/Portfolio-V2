@@ -42,7 +42,7 @@ const UserSchema = mongoose.Schema({
   homeContent: {
     type: String,
     minlength: 100,
-    maxlength: 300
+    maxlength: 5000
   }
 })
 

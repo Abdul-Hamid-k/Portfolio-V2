@@ -1,9 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { HashLink } from 'react-router-hash-link';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { UserDataContext } from '../../context/UserContext';
 
 const Header = () => {
+  const { user } = useContext(UserDataContext)
 
   const [toggeleMenu, setToggelMenu] = useState(false)
   const [activeNav, setActiveNav] = useState('home')
@@ -43,7 +45,7 @@ const Header = () => {
       <header className='hidden fixed md:block w-full z-10 bg-d-primary/50 backdrop-blur-lg text-l-primary dark:text-d-primary dark:bg-black/50 select-none'>
         <nav className='flex justify-between items-center py-4 px-5 h-[4.5rem]  max-w-[65rem] mx-auto'>
           {/* TODO */}
-          <li ref={logoRef} className='list-none text-lg font-medium'><HashLink to="/#home">Abdul Hamid</HashLink></li>
+          <li ref={logoRef} className='list-none text-lg font-medium'><HashLink to="/#home">{user.name}</HashLink></li>
 
 
 

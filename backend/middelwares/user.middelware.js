@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 export const userAuth = (req, res, next) => {
   const token = req.cookies?.token || req.headers?.authorization?.split(' ')[1]
 
-  console.log(token)
+  console.log('Auth token:', token)
 
   if (!token) {
     return res.status(401).json({ message: 'Access denied. Please log in.' })

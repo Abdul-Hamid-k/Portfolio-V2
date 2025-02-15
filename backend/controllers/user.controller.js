@@ -57,23 +57,23 @@ export const logoutUser = (req, res) => {
 
 export const UpdateDashboard = async (req, res) => {
   const errors = validationResult(req)
-  console.log('API called')
+  // console.log('API called')
 
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
-  const { userId, userImg, username, instaURL, linkedInURL, githubURL, heading, content } = req.body;
-
-  // console.log({ userId: userId, userImg: userImg, username: username, instaURL: instaURL, linkedInURL: linkedInURL, githubURL: githubURL, heading: heading, content: content })
+  // TODO: image
+  const { userId, name, instaURL, linkedInURL, githubURL, homeHeading, homeContent } = req.body;
+  const image = "Abdul hamid img"
+  // console.log({ userId: userId, image: image, name: name, instaURL: instaURL, linkedInURL: linkedInURL, githubURL: githubURL, homeHeading: homeHeading, homeContent: homeContent })
 
   console.log(userId)
-  if (!userId || !userImg || !username || !instaURL || !linkedInURL || !githubURL || !heading || !content) {
-    return res.status(400).json({ message: "Please provide all required fields", userId, userImg, username, instaURL, linkedInURL, githubURL, heading, content });
+  if (!userId || !image || !name || !instaURL || !linkedInURL || !githubURL || !homeHeading || !homeContent) {
+    return res.status(400).json({ message: "Please provide all required fields" });
   }
 
   try {
-    const updatedUser = await updateDashboard(userId, userImg, username, instaURL, linkedInURL, githubURL, heading, content)
+    const updatedUser = await updateDashboard(userId, image, name, instaURL, linkedInURL, githubURL, homeHeading, homeContent)
     return res.status(200).json({ message: "User Updated successfully", updatedUser });
   } catch (err) {
     console.error(err)

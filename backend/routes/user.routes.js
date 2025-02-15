@@ -19,13 +19,13 @@ router.post('/logout', logoutUser)
 router.post('/update-dashboard',
   [
     body('userId').isString().notEmpty().withMessage('ID is required'),
-    body('userImg').notEmpty().withMessage('Provide valid Image'),
-    body('username').isString().notEmpty().withMessage('Name is required'),
+    // body('userImg').notEmpty().withMessage('Provide valid Image'),
+    body('name').isString().notEmpty().withMessage('Name is required'),
     body('instaURL').isString().withMessage('URL is required'),
     body('linkedInURL').isString().withMessage('URL is required'),
     body('githubURL').isString().withMessage('URL is required'),
-    body('heading').isString().notEmpty().withMessage('Heading is required'),
-    body('content').isString().notEmpty().withMessage('Content is required'),
+    body('homeHeading').isString().notEmpty().withMessage('Heading is required'),
+    body('homeContent').isString().notEmpty().withMessage('Content is required'),
   ]
   , userAuth
   , UpdateDashboard)

@@ -1,14 +1,14 @@
 import UserModel from "../models/user.model.js"
 
-const updateDashboard = async (userId, userImg, username, instaURL, linkedInURL, githubURL, heading, content) => {
-  if (!userId || !userImg || !username || !instaURL || !linkedInURL || !githubURL || !heading || !content) {
+const updateDashboard = async (userId, image, name, instaURL, linkedInURL, githubURL, heading, content) => {
+  if (!userId || !image || !name || !instaURL || !linkedInURL || !githubURL || !heading || !content) {
     throw new Error('All Fields are required')
   }
 
   const user = await UserModel.findByIdAndUpdate({ _id: userId }, {
     $set: {
-      'image': userImg,
-      'name': username,
+      'image': image,
+      'name': name,
       'instaURL': instaURL,
       'linkedInURL': linkedInURL,
       'githubURL': githubURL,
@@ -17,8 +17,8 @@ const updateDashboard = async (userId, userImg, username, instaURL, linkedInURL,
     }
   }, { new: true })
 
-  // user.image = userImg
-  // user.name = username
+  // user.image = image
+  // user.name = name
   // user.instaURL = instaURL
   // user.linkedInURL = linkedInURL
   // user.githubURL = githubURL
