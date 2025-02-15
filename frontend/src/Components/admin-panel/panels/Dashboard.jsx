@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserDataContext } from '../../../context/UserContext'
 
 const Dashboard = () => {
@@ -17,11 +17,24 @@ const Dashboard = () => {
     setUserImg(URL.createObjectURL(e.target.files[0]));
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+
+    
+
   }
 
   console.log(user)
+
+  useEffect(() => {
+    setUsername(user.name)
+    setUserImg('')
+    setInstURL(user?.instURL)
+    setLinkedInURL(user?.linkedInURL)
+    setGitHubURL(user?.gitHubURL)
+    setHeading(user?.homeHeading)
+    setcontent(user?.homeContent)
+  }, [user])
 
 
   return (
