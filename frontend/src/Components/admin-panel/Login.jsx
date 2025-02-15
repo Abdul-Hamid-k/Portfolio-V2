@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { UserDataContext } from '../../context/UserContext'
 import { useNavigate } from 'react-router'
@@ -10,6 +10,12 @@ const Login = () => {
 
   const { user, setUser } = useContext(UserDataContext)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      localStorage.removeItem('token')
+    }
+  })
 
   const handleLogin = async (e) => {
     e.preventDefault()
