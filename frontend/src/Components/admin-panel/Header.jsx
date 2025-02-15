@@ -15,11 +15,11 @@ const Header = (props) => {
   useGSAP(() => {
     const tl = gsap.timeline()
 
-    tl.from(headerRef.ChildNodes, {
+    tl.from(headerRef.childNodes, {
       y: -100,
       duration: 0.72,
       opacity: 0,
-
+      stagger: 0.1
     })
   })
 
@@ -38,16 +38,15 @@ const Header = (props) => {
       });
   }
 
-  // console.log('props ', props)
+  console.log(headerRef)
 
   return (
     <>
       <header className='fixed w-full z-10 backdrop-blur-lg text-l-primary dark:text-d-primary dark:bg-black/50 select-none '>
-        <nav ref={elem => headerRef = elem} className='flex gap-3 items-center justify-between py-4 px-5 h-[4.5rem]  max-w-[75rem] mx-auto'>
-          <div>
-            <div onClick={(prev) => props.setIsSidemenuOpen(!props.isSidemenuOpen)}>
-              <i className="block cursor-pointer sm:hidden ri-menu-4-line text-lg" ></i>
-            </div>
+        <nav className='flex gap-3 items-center justify-between py-4 px-5 h-[4.5rem]  max-w-[75rem] mx-auto'>
+          <div ref={element => { headerRef = element }} className='flex gap-3'>
+            <i onClick={(prev) => props.setIsSidemenuOpen(!props.isSidemenuOpen)}
+              className="block cursor-pointer sm:hidden ri-menu-4-line text-lg" ></i>
             <li className='list-none text-lg font-medium'>Admin Panel</li>
           </div>
 
