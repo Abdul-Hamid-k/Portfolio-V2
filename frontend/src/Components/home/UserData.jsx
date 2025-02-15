@@ -6,7 +6,7 @@ const UserData = () => {
   return (
     <>
       <div className="order-2 md:order-0 col-start-2 col-span-11 md:col-span-6">
-        <h2 className='text-2xl md:text-4xl mb-2 font-medium'>Abdul Hamid 👋</h2>
+        <h2 className='text-2xl md:text-4xl mb-2 font-medium'>{user.name} 👋</h2>
 
         <div className="flex">
           <div className="h-[0.125rem] mt-3 mr-2 bg-l-primary dark:bg-d-primary w-20 "></div>

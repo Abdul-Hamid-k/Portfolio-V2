@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { UserDataContext } from '../../context/UserContext'
 
 const Social = () => {
+  const { user } = useContext(UserDataContext)
   return (
     <div className="flex flex-col gap-4 row-span-1">
       <a
@@ -10,12 +12,12 @@ const Social = () => {
       </a>
 
       <a
-        href="https://www.linkedin.com/in/abdul-hamid-khatri/"
+        href={user.linkedInURL}
         target='_blank'>
         <i className="cursor-pointer ri-linkedin-box-fill text-xl"></i>
       </a>
 
-      <a href="https://github.com/Abdul-Hamid-k"
+      <a href={user.githubURL}
         target='_blank'>
         <i className="cursor-pointer ri-github-fill text-xl"></i>
       </a>
