@@ -22,12 +22,24 @@ const UserSchema = mongoose.Schema({
     type: String,
     default: 'default.jpg'
   },
-  summaryHeading: {
+  instaURL: {
+    type: String,
+    unique: true,
+  },
+  linkedInURL: {
+    type: String,
+    unique: true,
+  },
+  githubURL: {
+    type: String,
+    unique: true,
+  },
+  homeHeading: {
     type: String,
     minlength: 10,
     maxlength: 100
   },
-  summaryContent: {
+  homeContent: {
     type: String,
     minlength: 100,
     maxlength: 300
