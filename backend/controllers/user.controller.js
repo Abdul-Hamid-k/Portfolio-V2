@@ -1,6 +1,7 @@
 import UserModel from '../models/user.model.js';
 import { validationResult } from 'express-validator'
 import { resetPassword } from '../services/resetPassword.service.js';
+import updateDashboard from '../services/updateDashboard.service.js';
 
 export const getUserDetails = async (req, res) => {
   // console.log(res.user)
@@ -52,4 +53,30 @@ export const loginUser = async (req, res) => {
 export const logoutUser = (req, res) => {
   res.clearCookie('token');
   res.status(200).json({ message: "Logged out" });
+}
+
+export const UpdateDashboard = async (req, res) => {
+  const errors = validationResult(req)
+  console.log('API called')
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { userId, userImg, username, instaURL, linkedInURL, githubURL, heading, content } = req.body;
+
+  // console.log({ userId: userId, userImg: userImg, username: username, instaURL: instaURL, linkedInURL: linkedInURL, githubURL: githubURL, heading: heading, content: content })
+
+  console.log(userId)
+  if (!userId || !userImg || !username || !instaURL || !linkedInURL || !githubURL || !heading || !content) {
+    return res.status(400).json({ message: "Please provide all required fields", userId, userImg, username, instaURL, linkedInURL, githubURL, heading, content });
+  }
+
+  try {
+    const updatedUser = await updateDashboard(userId, userImg, username, instaURL, linkedInURL, githubURL, heading, content)
+    return res.status(200).json({ message: "User Updated successfully", updatedUser });
+  } catch (err) {
+    console.error(err)
+    return res.status(500).json({ message: "Server Error:" + err });
+  }
 }

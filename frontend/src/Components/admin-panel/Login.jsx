@@ -11,12 +11,6 @@ const Login = () => {
   const { user, setUser } = useContext(UserDataContext)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      localStorage.removeItem('token')
-    }
-  })
-
   const handleLogin = async (e) => {
     e.preventDefault()
     console.log(email, password)
