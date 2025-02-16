@@ -45,21 +45,25 @@ const Login = () => {
         <h5 className='text-2xl text-center'>Admin Panel</h5>
 
         <div className="flex flex-col gap-1 mt-8">
-          <label className='text-sm text-l-secondary dark:text-d-secondary' htmlFor="UsernameOrEmail">Username or Email</label>
+          <label
+            className='text-sm text-l-secondary dark:text-d-secondary'
+            htmlFor="UsernameOrEmail">Username or Email</label>
           <input
+            id="UsernameOrEmail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className='border-[0.125rem] outline-none mt-1 border-d-secondary rounded-md px-3 py-2  focus:border-l-primary focus:dark:border-d-primary' id='UsernameOrEmail'
+            className='border-[0.125rem] outline-none mt-1 border-d-secondary rounded-md px-3 py-2  focus:border-l-primary focus:dark:border-d-primary'
             required
             type="Email" />
         </div>
 
         <div className="flex flex-col gap-1 mt-4">
-          <label className='text-sm text-l-secondary dark:text-d-secondary' htmlFor="UsernameOrEmail">Password</label>
+          <label className='text-sm text-l-secondary dark:text-d-secondary' htmlFor="password">Password</label>
           <input
+            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='border-[0.125rem] outline-none mt-1 border-d-secondary rounded-md px-3 py-2  focus:border-l-primary focus:dark:border-d-primary' id='UsernameOrEmail'
+            className='border-[0.125rem] outline-none mt-1 border-d-secondary rounded-md px-3 py-2  focus:border-l-primary focus:dark:border-d-primary'
             required
             type="password" />
         </div>

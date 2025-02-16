@@ -2,6 +2,8 @@ import UserModel from '../models/user.model.js';
 import { validationResult } from 'express-validator'
 import { resetPassword } from '../services/resetPassword.service.js';
 import updateDashboard from '../services/updateDashboard.service.js';
+import jwt from 'jsonwebtoken'
+import updateAbout from '../services/updateAbout.service.js';
 
 export const getUserDetails = async (req, res) => {
   // console.log(res.user)
@@ -13,6 +15,24 @@ export const getUserDetails = async (req, res) => {
   } catch (err) {
     console.error(err)
     return res.status(500).json({ message: "Server Error" });
+  }
+
+}
+
+export const IsTokenExpired = (req, res) => {
+
+  const token = res.token
+
+  // console.log('isTokenExpired token', token)
+
+  if (!token) return res.status(200).json({ 'expired': true });
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const currentTime = Date.now() / 1000;
+    return res.status(200).json({ 'expired': decodedToken.exp < currentTime });
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return res.status(200).json({ 'expired': true });
   }
 
 }
@@ -74,7 +94,31 @@ export const UpdateDashboard = async (req, res) => {
 
   try {
     const updatedUser = await updateDashboard(userId, image, name, instaURL, linkedInURL, githubURL, homeHeading, homeContent)
-    return res.status(200).json({ message: "User Updated successfully", updatedUser });
+    return res.status(200).json({ message: "User Dashboard Updated successfully", updatedUser });
+  } catch (err) {
+    console.error(err)
+    return res.status(500).json({ message: "Server Error:" + err });
+  }
+}
+
+export const UpdateAbout = async (req, res) => {
+  const errors = validationResult(req)
+  // console.log('API called')
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { userId, experienceYears, experienceMonths, aboutSummary, resume } = req.body
+  console.log({ userId: userId, experienceYears: experienceYears, experienceMonths: experienceMonths, aboutSummary: aboutSummary, resume: resume })
+
+  if (!userId || !experienceYears || !experienceMonths || !aboutSummary || !resume) {
+    return res.status(400).json({ message: "Please provide all required fields", userId: userId, experienceYears: experienceYears, experienceMonths: experienceMonths, aboutSummary: aboutSummary, resume: resume });
+  }
+
+  try {
+    const updatedUser = await updateAbout(userId, experienceYears, experienceMonths, aboutSummary, resume)
+    return res.status(200).json({ message: "User About Updated successfully", updatedUser });
   } catch (err) {
     console.error(err)
     return res.status(500).json({ message: "Server Error:" + err });

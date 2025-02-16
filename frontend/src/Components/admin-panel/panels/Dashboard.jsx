@@ -5,8 +5,8 @@ import axios from 'axios'
 
 
 const Dashboard = () => {
-  const [name, setName] = useState('')
-  const [userImg, setUserImg] = useState('')
+  const [name, setName] = useState("")
+  const [userImg, setUserImg] = useState(null)
   const [instaURL, setInstaURL] = useState('')
   const [linkedInURL, setLinkedInURL] = useState('')
   const [githubURL, setGithubURL] = useState('')
@@ -36,7 +36,7 @@ const Dashboard = () => {
       homeContent: content
     }
 
-    console.log("UserDataUpdateTo ", userdataUpdateTo)
+    // console.log("UserDataUpdateTo ", userdataUpdateTo)
     axios.post(import.meta.env.VITE_API_BASE_URL + '/user/update-dashboard', userdataUpdateTo, {
       headers: {
         'authorization': 'Bearer ' + localStorage.getItem('token')
@@ -51,7 +51,7 @@ const Dashboard = () => {
 
   }
 
-  console.log(user)
+  // console.log(user)
 
   useEffect(() => {
     setName(user.name)
@@ -74,10 +74,10 @@ const Dashboard = () => {
           <div className="flex flex-col gap-1 row-span-2">
             <label htmlFor="image" className='text-sm'>User Image</label>
 
-            <div className="flex flex-col h-full justify-end items-center gap-5 border-[0.025rem] focus-within:border-[0.125rem] outline-none mt-1 border-d-secondary rounded-md focus-within:border-l-primary focus-within:dark:border-d-primary p-3">
+            <div className="flex flex-col h-full justify-end items-center sm:items-start md:items-center gap-5 border-[0.025rem] focus-within:border-[0.125rem] outline-none mt-1 border-d-secondary rounded-md focus-within:border-l-primary focus-within:dark:border-d-primary p-3">
               {/* TODO: Img handling */}
               <img className='w-full sm:w-1/2'
-                src={userImg} alt="" />
+                src={userImg} alt="User Image" />
 
               <input
                 // required
@@ -85,7 +85,7 @@ const Dashboard = () => {
                 type='file'
                 id='image'
                 onChange={imagePreviewHandler}
-                className='text-xs'
+                className='text-xs w-fit text-center'
               />
 
 

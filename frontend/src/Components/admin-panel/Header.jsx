@@ -38,7 +38,7 @@ const Header = (props) => {
       });
   }
 
-  console.log(headerRef)
+  // console.log(headerRef)
 
   return (
     <>

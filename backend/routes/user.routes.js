@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUserDetails, loginUser, logoutUser, UpdateDashboard } from '../controllers/user.controller.js';
+import { getUserDetails, IsTokenExpired, loginUser, logoutUser, UpdateAbout, UpdateDashboard } from '../controllers/user.controller.js';
 import { body } from 'express-validator';
 import UserModel from '../models/user.model.js';
 import { userAuth } from '../middelwares/user.middelware.js';
@@ -7,6 +7,8 @@ import { userAuth } from '../middelwares/user.middelware.js';
 const router = express.Router()
 
 router.get('/', getUserDetails)
+
+router.get('/token-checker', userAuth, IsTokenExpired)
 
 router.post(
   '/login', [
@@ -29,5 +31,17 @@ router.post('/update-dashboard',
   ]
   , userAuth
   , UpdateDashboard)
+
+router.post('/update-about',
+  [
+    body('userId').isString().notEmpty().withMessage('ID is required'),
+    body('experienceYears').isInt().notEmpty().withMessage('Experience Year is required'),
+    body('experienceMonths').isInt().withMessage('Experience Months is required'),
+    body('aboutSummary').isString().withMessage('About Summary is required'),
+    body('resume').isString().withMessage('Resume is required'),
+  ]
+  , userAuth
+  , UpdateAbout)
+
 
 export default router

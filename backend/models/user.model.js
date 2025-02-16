@@ -43,12 +43,28 @@ const UserSchema = mongoose.Schema({
     type: String,
     minlength: 100,
     maxlength: 5000
+  },
+  experienceYears: {
+    type: Number,
+    default: 1
+  },
+  experienceMonths: {
+    type: Number,
+    default: 5
+  },
+  aboutSummary: {
+    type: String,
+    minlength: 100,
+    maxlength: [500, 'Length should be less tha 500 characters.']
+  },
+  resume: {
+    type: String
   }
 })
 
-UserSchema.methods.generateAuthToken = async function () {
+UserSchema.methods.generateAuthToken = function () {
   // generate auth token
-  const token = await jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: '1hr' })
+  const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: '1hr' })
   return token
 }
 
@@ -56,6 +72,16 @@ UserSchema.statics.hashPassword = async function (password) {
   // hash password
   const hashedPassword = await bcrypt.hash(password, 10)
   return hashedPassword
+}
+
+UserSchema.statics.chechIsTokenExpired = async function (token) {
+  // check if token is expired
+  try {
+    const decoded = await jwt.verify(token, process.env.JWT_SECRET)
+    return false
+  } catch (err) {
+    return true
+  }
 }
 
 UserSchema.methods.comparePassword = async function (password) {

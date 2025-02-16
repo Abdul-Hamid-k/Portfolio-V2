@@ -6,7 +6,7 @@ import axios from 'axios'
 const AuthWrapper = ({ children }) => {
 
   const token = localStorage.getItem('token')
-  // console.log(token)
+
 
   const [isLoading, setIsLoading] = useState(true)
 
@@ -16,9 +16,33 @@ const AuthWrapper = ({ children }) => {
 
   useEffect(() => {
     setIsLoading(true)
+    // console.log(!token)
+
     if (!token) {
+      // console.log('/admin-login')
       navigate('/admin-panel-login')
+      setIsLoading(false)
+      return
     }
+
+    const res = axios.get(import.meta.env.VITE_API_BASE_URL + '/user/token-checker', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then((res) => {
+        // console.log(res.data)
+
+        if (res.data.expired) {
+          // console.log(res.data.expired)
+          localStorage.removeItem('token')
+          navigate('/admin-panel-login')
+        }
+      })
+      .catch((err) => {
+        localStorage.removeItem('token')
+        navigate('/admin-panel-login')
+        console.error("Error Checking Token: ", err)
+      })
+
 
     axios.get(`${import.meta.env.VITE_API_BASE_URL}/user`).then(res => {
       // console.log(res)
@@ -31,8 +55,11 @@ const AuthWrapper = ({ children }) => {
       navigate('/admin-panel-login')
       console.error('Error fetching user data:', err)
       setUser(null)
+      setIsLoading(false)
       throw new Error('Invalid token')
     })
+    return
+
   }, [])
 
 
