@@ -26,7 +26,7 @@ const updateDashboard = async (userId, image, name, instaURL, linkedInURL, githu
   // user.homeContent = content
 
   await user.save()
-  console.log(user)
+  // console.log(user)
   return user
 }
 

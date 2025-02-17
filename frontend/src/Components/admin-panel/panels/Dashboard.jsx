@@ -41,8 +41,8 @@ const Dashboard = () => {
       headers: {
         'authorization': 'Bearer ' + localStorage.getItem('token')
       }
-    }).then(res => {
-      console.log(res)
+    }).then(res => { 
+      // console.log(res)
       toast.success('Dashboard updated successfully!')
     }).catch(err => {
       console.error('Error updating dashboard:', err)

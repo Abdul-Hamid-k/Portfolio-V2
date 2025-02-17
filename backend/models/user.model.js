@@ -54,7 +54,7 @@ const UserSchema = mongoose.Schema({
   },
   aboutSummary: {
     type: String,
-    minlength: 100,
+    minlength: 10,
     maxlength: [500, 'Length should be less tha 500 characters.']
   },
   resume: {
