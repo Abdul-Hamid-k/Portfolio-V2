@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { UserDataContext } from '../../../context/UserContext'
+import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify'
 
 const About = () => {
   const [experienceYear, setExperienceYear] = useState(0)
@@ -6,13 +9,41 @@ const About = () => {
   const [aboutSummary, setAboutSummary] = useState('')
   const [resumeFile, setResumeFile] = useState('')
 
+  const { user, setUser } = useContext(UserDataContext)
+
   const resumePreviewHandler = (e) => {
     // console.log(e.target.files)
     setResumeFile(URL.createObjectURL(e.target.files[0]));
   }
 
+  useEffect(() => {
+    setExperienceMonths(user.experienceMonths)
+    setExperienceYear(user.experienceYears)
+    setAboutSummary(user.aboutSummary)
+    setResumeFile(user.resumeFile)
+  }, [user])
+
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    axios.post(import.meta.env.VITE_API_BASE_URL + '/user/update-about', {
+      userId: user._id,
+      experienceYears: experienceYear,
+      experienceMonths: experienceMonths,
+      aboutSummary: aboutSummary,
+      resume: resumeFile
+    }, {
+      headers: {
+        'authorization': 'Bearer ' + localStorage.getItem('token')
+      }
+    }).then(res => {
+      toast.success('About updated successfully!')
+      console.log(res)
+    }).catch(err => {
+      console.error('Error updating about:', err)
+      toast.danger('Error updating dashboard')
+
+    });
   }
 
 
@@ -20,7 +51,8 @@ const About = () => {
   return (
     <>
       <h3 className='font-medium'>About Me</h3>
-      <form className='px-5 py-6 dark:bg-l-secondary bg-d-secondary/12 rounded-2xl mt-5 '>
+      <ToastContainer />
+      <form onSubmit={handleSubmit} className='px-5 py-6 dark:bg-l-secondary bg-d-secondary/12 rounded-2xl mt-5 '>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
 
           {/* experienceYear */}
@@ -70,8 +102,9 @@ const About = () => {
             {/* TODO */}
             <div className="flex flex-col gap-5 border-[0.025rem] focus-within:border-[0.125rem] outline-none mt-1 border-d-secondary rounded-md focus-within:border-l-primary focus-within:dark:border-d-primary p-3">
 
+              {/* TODO: File Handling */}
               <input
-                required
+                // required
                 type='file'
                 id='resumeFile'
                 onChange={resumePreviewHandler}

@@ -109,8 +109,10 @@ export const UpdateAbout = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { userId, experienceYears, experienceMonths, aboutSummary, resume } = req.body
-  console.log({ userId: userId, experienceYears: experienceYears, experienceMonths: experienceMonths, aboutSummary: aboutSummary, resume: resume })
+  // TODO: resume
+  const resume = "resume"
+  const { userId, experienceYears, experienceMonths, aboutSummary } = req.body
+  // console.log({ userId: userId, experienceYears: experienceYears, experienceMonths: experienceMonths, aboutSummary: aboutSummary, resume: resume })
 
   if (!userId || !experienceYears || !experienceMonths || !aboutSummary || !resume) {
     return res.status(400).json({ message: "Please provide all required fields", userId: userId, experienceYears: experienceYears, experienceMonths: experienceMonths, aboutSummary: aboutSummary, resume: resume });

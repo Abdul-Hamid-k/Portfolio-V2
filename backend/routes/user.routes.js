@@ -18,6 +18,7 @@ router.post(
 
 router.post('/logout', logoutUser)
 
+// TODO: IMG and Resume
 router.post('/update-dashboard',
   [
     body('userId').isString().notEmpty().withMessage('ID is required'),
@@ -38,7 +39,7 @@ router.post('/update-about',
     body('experienceYears').isInt().notEmpty().withMessage('Experience Year is required'),
     body('experienceMonths').isInt().withMessage('Experience Months is required'),
     body('aboutSummary').isString().withMessage('About Summary is required'),
-    body('resume').isString().withMessage('Resume is required'),
+    // body('resume').isString().withMessage('Resume is required'),
   ]
   , userAuth
   , UpdateAbout)
