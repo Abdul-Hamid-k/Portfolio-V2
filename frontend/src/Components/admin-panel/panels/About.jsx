@@ -84,7 +84,7 @@ const About = () => {
 
           {/* experienceMonths */}
           <div className="flex flex-col gap-1">
-            <label htmlFor="experienceYears" className='text-sm'>Experience Months</label>
+            <label htmlFor="experienceMonths" className='text-sm'>Experience Months</label>
             <input
               required
               value={experienceMonths}
@@ -98,7 +98,7 @@ const About = () => {
 
           {/* resumeFile */}
           <div className="flex flex-col gap-1 h-full">
-            <label htmlFor="image" className='text-sm'>Resume</label>
+            <label htmlFor="resumeFile" className='text-sm'>Resume</label>
             {/* TODO */}
             <div className="flex flex-col gap-5 border-[0.025rem] focus-within:border-[0.125rem] outline-none mt-1 border-d-secondary rounded-md focus-within:border-l-primary focus-within:dark:border-d-primary p-3">
 

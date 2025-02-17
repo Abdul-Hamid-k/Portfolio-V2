@@ -68,15 +68,15 @@ const AuthWrapper = ({ children }) => {
 
   return (
     <>
-      {isLoading ? (
+      {/* {isLoading ? (
         <div className="h-screen bg-d-primary text-l-primary dark:bg-black dark:text-d-primary flex justify-center items-center">
           <p>Loading...</p>
         </div>
-      ) : (
-        <>
-          {children}
-        </>
-      )}
+      ) : ( */}
+      <>
+        {children}
+      </>
+      {/* )} */}
     </>
   )
 
