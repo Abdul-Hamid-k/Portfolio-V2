@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 
 const SideMenu = (props) => {
-  const [activePanle, setActivePanle] = useState('home')
+  const [activePanle, setActivePanle] = useState(window.location.href.split('/')[window.location.href.split('/').length - 1])
 
   let menuRef = useRef(null)
   const sidePanelRef = useRef(null)
@@ -62,7 +62,7 @@ const SideMenu = (props) => {
   }, [])
 
   const navigate = useNavigate()
-  
+
   return (
     <div ref={sidePanelRef} className='bg-d-primary dark:bg-black absolute -translate-x-full sm:translate-x-0 sm:fixed h-full '>
 

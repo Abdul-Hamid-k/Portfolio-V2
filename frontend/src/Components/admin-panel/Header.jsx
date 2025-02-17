@@ -50,8 +50,8 @@ const Header = (props) => {
             <li className='list-none text-lg font-medium'>Admin Panel</li>
           </div>
 
-          <div onClick={logoutUser} className="bg-l-secondary dark:bg-l-secondary rounded-full h-12 w-12 flex justify-center items-center">
-            <i className="ri-logout-box-r-line text-xl cursor-pointer"></i>
+          <div onClick={logoutUser} className="bg-d-secondary text-white dark:bg-l-secondary rounded-full h-8 w-8 flex justify-center items-center">
+            <i className="ri-logout-box-r-line text-base md:text-xl cursor-pointer"></i>
           </div>
         </nav >
 
