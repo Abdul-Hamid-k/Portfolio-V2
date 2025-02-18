@@ -5,6 +5,7 @@ import updateDashboard from '../services/updateDashboard.service.js';
 import jwt from 'jsonwebtoken'
 import updateAbout from '../services/updateAbout.service.js';
 import deleteSkill from '../services/deleteSkill.service.js';
+import addSkill from '../services/addSkill.service.js';
 
 export const getUserDetails = async (req, res) => {
   // console.log(res.user)
@@ -138,13 +139,35 @@ export const DeleteSkill = async (req, res) => {
   }
   const userId = res.user.id;
   const { skillName } = req.body;
-  console.log(userId, skillName)
+  // console.log(userId, skillName)
 
   try {
     const updatedUser = await deleteSkill(userId, skillName)
-    return res.status(200).json({ message: "skill deleted successfully", user: updatedUser });
+    return res.status(200).json({ message: "skill deleted successfully", updatedUser });
   } catch (err) {
-    console.error(err)
+    console.error("Error deleting skill: ", err)
     return res.status(500).json({ message: "Server Error:" + err });
   }
+}
+
+export const AddSkill = async (req, res) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const userId = res.user.id;
+  const { skillName, skillLevel, category } = req.body;
+
+  try {
+    const updatedUser = await addSkill(userId, skillName, skillLevel, category)
+    return res.status(200).json({ message: "skill added successfully", user: updatedUser });
+  } catch (err) {
+    console.error('Error Adding Skill: ' + err)
+    if (err.message === 'Skill already exists') {
+      return res.status(400).json({ message: "Skill already exists" });
+    }
+    return res.status(500).json({ message: "Server Error: " + err });
+  }
+  // console.log(userId, skillName, skillDescription)
 }

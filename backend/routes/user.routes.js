@@ -1,5 +1,5 @@
 import express from 'express';
-import { DeleteSkill, getUserDetails, IsTokenExpired, loginUser, logoutUser, UpdateAbout, UpdateDashboard } from '../controllers/user.controller.js';
+import { AddSkill, DeleteSkill, getUserDetails, IsTokenExpired, loginUser, logoutUser, UpdateAbout, UpdateDashboard } from '../controllers/user.controller.js';
 import { body } from 'express-validator';
 import UserModel from '../models/user.model.js';
 import { userAuth } from '../middelwares/user.middelware.js';
@@ -49,5 +49,15 @@ router.delete('/delete-skill',
   ],
   userAuth,
   DeleteSkill)
+
+router.post('/add-skill',
+  [
+    body('skillName').notEmpty().withMessage('Skill Name is required'),
+    body('skillLevel').notEmpty().withMessage('Skill Level is required'),
+    body('category').notEmpty().withMessage('Skill Category is required'),
+  ],
+  userAuth,
+  AddSkill
+)
 
 export default router
