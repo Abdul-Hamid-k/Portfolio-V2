@@ -16,10 +16,7 @@ const Skills = () => {
 
   useEffect(() => {
     setSearchFilter('')
-    // console.log(user)
     setRenderResult(user?.skills)
-    console.log(user?.skills)
-    console.log('setRenderResult')
   }, [user])
 
   const AddSkillHandler = (e) => {
@@ -40,11 +37,11 @@ const Skills = () => {
       }
 
     }).catch(err => {
-      if (err.status === 400) {
-        toast.error('Skill already exists!')
+      if (err.status === 406) {
+        toast.error('Skill Already Exists!')
       } else {
-        console.error('Error updating about:', err)
-        toast.error('Error updating dashboard')
+        console.error('Error Adding Skill:', err)
+        toast.error('Error Adding Skill')
       }
 
     });
@@ -73,9 +70,6 @@ const Skills = () => {
       console.error('Error deleting skill:', err)
       toast.error('Error deleting skill')
     })
-
-
-
   }
 
   const handleCategories = (e) => {
@@ -100,7 +94,7 @@ const Skills = () => {
       return
     }
     if (selectedSkills === 'all') {
-      console.log(user?.skills?.filter(skill => skill.skillName.toLowerCase().includes(searchFilter.toLowerCase())))
+      // console.log(user?.skills?.filter(skill => skill.skillName.toLowerCase().includes(searchFilter.toLowerCase())))
       setRenderResult(user?.skills?.filter(skill => skill.skillName.toLowerCase().includes(searchFilter.toLowerCase())))
       return
     }
@@ -110,7 +104,7 @@ const Skills = () => {
 
   const categories = Array.from(new Set(user?.skills?.map(skill => skill.category)))
 
-  console.log(renderResult)
+  // console.log(renderResult)
 
   return (
     <>
