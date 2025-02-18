@@ -13,10 +13,12 @@ const Skills = () => {
 
   useEffect(() => {
     setSearchFilter('')
+    console.log(user)
     setRenderResult(user?.skills)
+    console.log('setRenderResult')
   }, [user])
 
-  const handleSubmit = (e) => {
+  const AddSkillHandler = (e) => {
     e.preventDefault()
 
     // axios.post(import.meta.env.VITE_API_BASE_URL + '/user/update-about', {
@@ -37,6 +39,25 @@ const Skills = () => {
     //   toast.danger('Error updating dashboard')
 
     // });
+  }
+
+  console.log(import.meta.env.VITE_API_BASE_URL + '/user/delete-skill')
+
+  const DeleteSkillHandler = (skillName) => {
+    axios.delete(import.meta.env.VITE_API_BASE_URL + '/user/delete-skill', {
+      data: { skillName: skillName },
+      headers: {
+        'authorization': 'Bearer ' + localStorage.getItem('token')
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        setUser(res?.data?.user)
+        toast.success('Skill deleted successfully!')
+      }
+    }).catch(err => {
+      console.error('Error deleting skill:', err)
+      toast.error('Error deleting skill')
+    })
   }
 
   const handleCategories = (e) => {
@@ -71,6 +92,7 @@ const Skills = () => {
 
   const categories = Array.from(new Set(user?.skills?.map(skill => skill.category)))
 
+  console.log(renderResult)
 
   return (
     <>
@@ -122,7 +144,7 @@ const Skills = () => {
 
         {/* Add Skill */}
         <h4 className='text-sm mt-5 capitalize mb-4'>Add Skill</h4>
-        <form onSubmit={handleSubmit} className=''>
+        <form onSubmit={AddSkillHandler} className=''>
           <div className="flex flex-col md:flex-row gap-3">
             {/* skillName */}
             <input
@@ -184,7 +206,7 @@ const Skills = () => {
 
         <div className="flex flex-col gap-3">
           {renderResult?.map(skill => (
-            <div className='flex border-[0.025rem] text-sm py-2 px-3 rounded-md items-center'>
+            <div key={skill?.skillName} className='flex border-[0.025rem] text-sm py-2 px-3 rounded-md items-center'>
               <div key={skill._id} className="grid grow grid-cols-2 sm:grid-cols-3 gap-1 ">
                 <h5 className='capitalize'>{skill.skillName}</h5>
                 <h5 className='capitalize'>{skill.category}</h5>
@@ -192,7 +214,7 @@ const Skills = () => {
 
               </div>
               <div className="justify-self-end">
-                <i className="ri-delete-bin-fill cursor-pointer text-red-500 text-base"></i>
+                <i onClick={() => DeleteSkillHandler(skill.skillName)} className="ri-delete-bin-fill cursor-pointer text-red-500 text-base"></i>
               </div>
             </div>
           ))}
