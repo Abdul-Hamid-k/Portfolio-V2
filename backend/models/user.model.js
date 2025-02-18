@@ -59,6 +59,9 @@ const UserSchema = mongoose.Schema({
   },
   resume: {
     type: String
+  },
+  skills: {
+    type: [{}],
   }
 })
 

@@ -4,6 +4,7 @@ import { resetPassword } from '../services/resetPassword.service.js';
 import updateDashboard from '../services/updateDashboard.service.js';
 import jwt from 'jsonwebtoken'
 import updateAbout from '../services/updateAbout.service.js';
+import deleteSkill from '../services/deleteSkill.service.js';
 
 export const getUserDetails = async (req, res) => {
   // console.log(res.user)
@@ -83,8 +84,9 @@ export const UpdateDashboard = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   // TODO: image
-  const { userId, name, instaURL, linkedInURL, githubURL, homeHeading, homeContent } = req.body;
+  const { name, instaURL, linkedInURL, githubURL, homeHeading, homeContent } = req.body;
   const image = "Abdul hamid img"
+  const userId = res.user.id
   // console.log({ userId: userId, image: image, name: name, instaURL: instaURL, linkedInURL: linkedInURL, githubURL: githubURL, homeHeading: homeHeading, homeContent: homeContent })
 
   console.log(userId)
@@ -111,7 +113,8 @@ export const UpdateAbout = async (req, res) => {
 
   // TODO: resume
   const resume = "resume"
-  const { userId, experienceYears, experienceMonths, aboutSummary } = req.body
+  const { experienceYears, experienceMonths, aboutSummary } = req.body
+  const userId = res.user.id
   // console.log({ userId: userId, experienceYears: experienceYears, experienceMonths: experienceMonths, aboutSummary: aboutSummary, resume: resume })
 
   if (!userId || !experienceYears || !experienceMonths || !aboutSummary || !resume) {
@@ -121,6 +124,25 @@ export const UpdateAbout = async (req, res) => {
   try {
     const updatedUser = await updateAbout(userId, experienceYears, experienceMonths, aboutSummary, resume)
     return res.status(200).json({ message: "User About Updated successfully", updatedUser });
+  } catch (err) {
+    console.error(err)
+    return res.status(500).json({ message: "Server Error:" + err });
+  }
+}
+
+export const DeleteSkill = async (req, res) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const userId = res.user.id;
+  const { skillName } = req.body;
+  // console.log(userId, skillName)
+
+  try {
+    const updatedUser = await deleteSkill(userId, skillName)
+    return res.status(200).json({ message: "skill deleted successfully", updatedUser });
   } catch (err) {
     console.error(err)
     return res.status(500).json({ message: "Server Error:" + err });

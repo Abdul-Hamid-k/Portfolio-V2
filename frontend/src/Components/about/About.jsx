@@ -5,6 +5,7 @@ import CV from '../../assets/AbdulHamidKhatri.pdf'
 
 const About = () => {
   const { user } = useContext(UserDataContext)
+  console.log(user)
 
   return (
     <section id="about" className='min-h-[42rem] py-[5rem] px-3 text-gray-dd'>
@@ -26,8 +27,8 @@ const About = () => {
             <div className="border-[0.015rem] w-full rounded-md px-3 py-4  md:py-4 md:px-5 lg:px-6 border-l-secondary dark:border-d-secondary flex flex-col items-center gap-1">
               <i className="ri-award-line text-2xl"></i>
               <h4 className="font-medium text-sm md:text-base ">Experience</h4>
-              <h5 className="text-xs text-l-secondary dark:text-d-secondary">{`${user?.experienceYear < 2 ? 'Fresher' : user?.experienceYear > 2 ? 'Senior' : 'Lead'}`}</h5>
-              <h5 className="hidden md:block text-center text-xs font-light text-l-secondary dark:text-d-secondary">{`(${user?.experienceYear}.${user?.experienceMonths} Years)`}</h5>
+              <h5 className="text-xs text-l-secondary dark:text-d-secondary">{`${user?.experienceYears < 2 ? 'Fresher' : user?.experienceYears > 2 ? 'Senior' : 'Lead'}`}</h5>
+              <h5 className="hidden md:block text-center text-xs font-light text-l-secondary dark:text-d-secondary">{`(${user?.experienceYears}.${user?.experienceMonths} Years)`}</h5>
             </div>
 
             {/* Completed badge */}

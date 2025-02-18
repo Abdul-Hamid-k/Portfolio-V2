@@ -26,7 +26,7 @@ const Dashboard = () => {
     e.preventDefault()
 
     const userdataUpdateTo = {
-      userId: user._id,
+      // userId: user._id,
       name: name,
       image: imgName,
       instaURL: instaURL,
@@ -41,7 +41,7 @@ const Dashboard = () => {
       headers: {
         'authorization': 'Bearer ' + localStorage.getItem('token')
       }
-    }).then(res => { 
+    }).then(res => {
       // console.log(res)
       toast.success('Dashboard updated successfully!')
     }).catch(err => {

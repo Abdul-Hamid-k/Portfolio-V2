@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUserDetails, IsTokenExpired, loginUser, logoutUser, UpdateAbout, UpdateDashboard } from '../controllers/user.controller.js';
+import { DeleteSkill, getUserDetails, IsTokenExpired, loginUser, logoutUser, UpdateAbout, UpdateDashboard } from '../controllers/user.controller.js';
 import { body } from 'express-validator';
 import UserModel from '../models/user.model.js';
 import { userAuth } from '../middelwares/user.middelware.js';
@@ -21,7 +21,7 @@ router.post('/logout', logoutUser)
 // TODO: IMG and Resume
 router.post('/update-dashboard',
   [
-    body('userId').isString().notEmpty().withMessage('ID is required'),
+    // body('userId').isString().notEmpty().withMessage('ID is required'),
     // body('userImg').notEmpty().withMessage('Provide valid Image'),
     body('name').isString().notEmpty().withMessage('Name is required'),
     body('instaURL').isString().withMessage('URL is required'),
@@ -35,7 +35,6 @@ router.post('/update-dashboard',
 
 router.post('/update-about',
   [
-    body('userId').isString().notEmpty().withMessage('ID is required'),
     body('experienceYears').isInt().notEmpty().withMessage('Experience Year is required'),
     body('experienceMonths').isInt().withMessage('Experience Months is required'),
     body('aboutSummary').isString().withMessage('About Summary is required'),
@@ -44,5 +43,11 @@ router.post('/update-about',
   , userAuth
   , UpdateAbout)
 
+router.delete('/delete-skill',
+  [
+    body('skillName').notEmpty().withMessage('Skill ID is required')
+  ],
+  userAuth,
+  DeleteSkill)
 
 export default router
