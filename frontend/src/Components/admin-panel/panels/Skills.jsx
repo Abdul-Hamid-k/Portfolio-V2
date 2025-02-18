@@ -7,45 +7,60 @@ const Skills = () => {
   const [searchFilter, setSearchFilter] = useState('')
   const [renderResult, setRenderResult] = useState([])
   const [selectedSkills, setSelectedSkills] = useState('all')
+  const [skillName, setSkillName] = useState('')
+  const [skillLevel, setSkillLevel] = useState('')
+  const [category, setCategory] = useState('')
 
   const { user, setUser } = useContext(UserDataContext)
 
 
   useEffect(() => {
     setSearchFilter('')
-    console.log(user)
+    // console.log(user)
     setRenderResult(user?.skills)
+    console.log(user?.skills)
     console.log('setRenderResult')
   }, [user])
 
   const AddSkillHandler = (e) => {
     e.preventDefault()
 
-    // axios.post(import.meta.env.VITE_API_BASE_URL + '/user/update-about', {
-    //   userId: user._id,
-    //   experienceYears: experienceYear,
-    //   experienceMonths: experienceMonths,
-    //   aboutSummary: aboutSummary,
-    //   resume: resumeFile
-    // }, {
-    //   headers: {
-    //     'authorization': 'Bearer ' + localStorage.getItem('token')
-    //   }
-    // }).then(res => {
-    //   toast.success('About updated successfully!')
-    //   console.log(res)
-    // }).catch(err => {
-    //   console.error('Error updating about:', err)
-    //   toast.danger('Error updating dashboard')
+    axios.post(import.meta.env.VITE_API_BASE_URL + '/user/add-skill', {
+      skillName: skillName,
+      skillLevel: skillLevel,
+      category: category
+    }, {
+      headers: {
+        'authorization': 'Bearer ' + localStorage.getItem('token')
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        setUser(res?.data?.user)
+        toast.success('Skill added successfully!')
+      }
 
-    // });
+    }).catch(err => {
+      if (err.status === 400) {
+        toast.error('Skill already exists!')
+      } else {
+        console.error('Error updating about:', err)
+        toast.error('Error updating dashboard')
+      }
+
+    });
+    setSkillName('')
+    setSkillLevel('')
+    setCategory('')
   }
 
-  console.log(import.meta.env.VITE_API_BASE_URL + '/user/delete-skill')
+  // console.log(import.meta.env.VITE_API_BASE_URL + '/user/delete-skill')
 
-  const DeleteSkillHandler = (skillName) => {
-    axios.delete(import.meta.env.VITE_API_BASE_URL + '/user/delete-skill', {
-      data: { skillName: skillName },
+  const DeleteSkillHandler = (skillName, skillLevel, category) => {
+    axios.post(import.meta.env.VITE_API_BASE_URL + '/user/delete-skill', {
+      skillName: skillName,
+      skillLevel: skillLevel,
+      category: category
+    }, {
       headers: {
         'authorization': 'Bearer ' + localStorage.getItem('token')
       }
@@ -58,6 +73,9 @@ const Skills = () => {
       console.error('Error deleting skill:', err)
       toast.error('Error deleting skill')
     })
+
+
+
   }
 
   const handleCategories = (e) => {
@@ -149,25 +167,28 @@ const Skills = () => {
             {/* skillName */}
             <input
               required
-              value={name}
+              value={skillName}
               placeholder='Skill Name'
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setSkillName(e.target.value)}
               id='skillName'
               className='flex-1 border-[0.025rem] focus:border-[0.125rem] text-sm outline-none mt-1/2 border-d-secondary rounded-md px-3 py-2  focus:border-l-primary focus:dark:border-d-primary'
               type="text" />
 
             {/* category */}
-            <select className='flex-1  bg-l-secondary w-full px-3 py-2 rounded-lg dark:bg-d-secondary text-white text-sm outline-none'>
+            <select
+              onChange={(e) => setCategory(e.target.value)}
+              value={category}
+              className='flex-1  bg-l-secondary w-full px-3 py-2 rounded-lg dark:bg-d-secondary text-white text-sm outline-none'>
               <option
-                disabled
+                value=''
                 selected
-                className='  bg-l-secondary w-full px-3 py-2 dark:bg-d-secondary text-white text-sm outline-none'
+                className='bg-l-secondary w-full px-3 py-2 dark:bg-d-secondary text-white text-sm outline-none'
               >
                 Select Category
               </option>
-              {categories?.map(category => (
+              {['Frontend', 'Backend'].map(category => (
                 <option key={category}
-                  className=' bg-l-secondary w-full px-3 py-2 mt-4 rounded-lg dark:bg-d-secondary text-white text-sm outline-none'
+                  className='capitalize bg-l-secondary w-full px-3 py-2 mt-4 rounded-lg dark:bg-d-secondary text-white text-sm outline-none'
                   value={category}>
                   {category}
                 </option>
@@ -175,15 +196,18 @@ const Skills = () => {
             </select>
 
             {/* SkillLevel */}
-            <select className='flex-1  bg-l-secondary w-full px-3 py-2 rounded-lg dark:bg-d-secondary text-white text-sm outline-none'>
+            <select
+              onChange={(e) => setSkillLevel(e.target.value)}
+              value={skillLevel}
+              className='flex-1  bg-l-secondary w-full px-3 py-2 rounded-lg dark:bg-d-secondary text-white text-sm outline-none'>
               <option
-                disabled
+                value=''
                 selected
                 className='  bg-l-secondary w-full px-3 py-2 dark:bg-d-secondary text-white text-sm outline-none'
               >
                 Select Level
               </option>
-              {['basics', 'intermediate', 'advance']?.map(level => (
+              {['Basics', 'Intermediate', 'Advance']?.map(level => (
                 <option key={level}
                   className='capitalize bg-l-secondary w-full px-3 py-2 mt-4 rounded-lg dark:bg-d-secondary text-white text-sm outline-none'
                   value={level}>
@@ -194,6 +218,7 @@ const Skills = () => {
 
           </div>
           <button
+            onClick={(e) => AddSkillHandler(e)}
             className='mt-4 bg-l-primary dark:bg-d-primary text-d-primary dark:text-l-primary px-5 py-2 rounded-md font-medium cursor-pointer'>
             Add Skill
           </button>
@@ -214,7 +239,7 @@ const Skills = () => {
 
               </div>
               <div className="justify-self-end">
-                <i onClick={() => DeleteSkillHandler(skill.skillName)} className="ri-delete-bin-fill cursor-pointer text-red-500 text-base"></i>
+                <i onClick={() => DeleteSkillHandler(skill.skillName, skill.skillLevel, skill.category)} className="ri-delete-bin-fill cursor-pointer text-red-500 text-base"></i>
               </div>
             </div>
           ))}

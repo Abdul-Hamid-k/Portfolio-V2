@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 
 export const userAuth = (req, res, next) => {
-  const token = req?.cookies?.token || req.headers?.authorization?.split(' ')[1]
+  const token = req?.cookies?.token || req?.headers?.authorization?.split(' ')[1]
+  // console.log(req?.headers)
 
   console.log('Auth token:', token)
 
