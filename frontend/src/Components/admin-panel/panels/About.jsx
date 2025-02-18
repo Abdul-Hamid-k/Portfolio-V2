@@ -27,7 +27,7 @@ const About = () => {
     e.preventDefault()
 
     axios.post(import.meta.env.VITE_API_BASE_URL + '/user/update-about', {
-      userId: user._id,
+      // userId: user._id,
       experienceYears: experienceYear,
       experienceMonths: experienceMonths,
       aboutSummary: aboutSummary,
