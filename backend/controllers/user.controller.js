@@ -138,12 +138,14 @@ export const DeleteSkill = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   const userId = res.user.id;
-  const { skillName } = req.body;
+  console.log(req.body)
+  const { skillName, skillLevel, category } = req.body;
   // console.log(userId, skillName)
 
   try {
-    const updatedUser = await deleteSkill(userId, skillName)
-    return res.status(200).json({ message: "skill deleted successfully", updatedUser });
+    const updatedUser = await deleteSkill(userId, skillName, skillLevel, category)
+    console.log("updatedUser", updatedUser.skills)
+    return res.status(200).json({ message: "skill deleted successfully", user: updatedUser });
   } catch (err) {
     console.error("Error deleting skill: ", err)
     return res.status(500).json({ message: "Server Error:" + err });

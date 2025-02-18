@@ -43,9 +43,11 @@ router.post('/update-about',
   , userAuth
   , UpdateAbout)
 
-router.delete('/delete-skill',
+router.post('/delete-skill',
   [
-    body('skillName').notEmpty().withMessage('Skill ID is required')
+    body('skillName').notEmpty().withMessage('Skill Name is required'),
+    // body('skillLevel').notEmpty().withMessage('Skill Level is required'),
+    // body('category').notEmpty().withMessage('Skill Category is required'),
   ],
   userAuth,
   DeleteSkill)

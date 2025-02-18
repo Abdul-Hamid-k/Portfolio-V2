@@ -1,6 +1,6 @@
 import UserModel from "../models/user.model.js"
 
-const deleteSkill = async (userId, skillName) => {
+const deleteSkill = async (userId, skillName, skillLevel, category) => {
 
   const user = await UserModel.findById(userId)
 
@@ -8,18 +8,19 @@ const deleteSkill = async (userId, skillName) => {
     throw new Error("User not found")
   }
 
-  console.log('user', user?.experienceMonths)
-  // console.log('user skills', user["skills"])
-  // console.log('user', user)
-  user?.skills?.filter(async (skill, index) => {
-    if (skill.skillName.toLowerCase() === skillName.toLowerCase()) {
-      console.log(skill.skillName === skillName, index)
-      await UserModel.updateOne({ '_id': userId }, { '$pull': { 'skills': skill } });
-    }
-  })
-  // console.log('removeIndex', user)
+  const updatedUser = await UserModel.findOneAndUpdate(
+    { '_id': userId },
+    {
+      '$pull':
+      {
+        'skills':
+          { skillName, skillLevel, category }
+      }
+    },
+    { new: true });
 
-  return user
+  console.log('user', updatedUser.skills)
+  return updatedUser
 }
 
 export default deleteSkill
