@@ -167,7 +167,7 @@ export const AddSkill = async (req, res) => {
   } catch (err) {
     console.error('Error Adding Skill: ' + err)
     if (err.message === 'Skill already exists') {
-      return res.status(400).json({ message: "Skill already exists" });
+      return res.status(406).json({ message: "Skill already exists" });
     }
     return res.status(500).json({ message: "Server Error: " + err });
   }
