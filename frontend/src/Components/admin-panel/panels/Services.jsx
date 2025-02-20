@@ -21,11 +21,18 @@ const Services = () => {
 
   const AddService = (e) => {
     e.preventDefault()
+    console.log({
+      serviceName,
+      serviceDescription,
+      servicePoints,
+      serviceIcon,
+    })
   }
 
   const DeleteService = () => {
     e.preventDefault();
   }
+
 
 
 

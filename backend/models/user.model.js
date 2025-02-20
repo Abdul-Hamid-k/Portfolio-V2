@@ -62,6 +62,10 @@ const UserSchema = mongoose.Schema({
   },
   skills: {
     type: [{}],
+  },
+  services: {
+    type: [{}],
+    default: []
   }
 })
 
