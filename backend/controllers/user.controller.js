@@ -186,7 +186,8 @@ export const AddService = async (req, res) => {
   // console.log({ "userId": userId, "serviceName": serviceName, "serviceDescription": serviceDescription, "serviceIcon": serviceIcon, "servicePoints": servicePoints })
 
   try {
-    const service = await addService(userId, serviceName, serviceDescription, serviceIcon, servicePoints)
+    const user = await addService(userId, serviceName, serviceDescription, serviceIcon, servicePoints)
+    return res.status(201).json({ message: "Service created successfully", user })
   } catch (e) {
     if (e.message === "Service already exists") {
       return res.status(406).json({ message: "Service already exists" });
@@ -195,5 +196,4 @@ export const AddService = async (req, res) => {
     return res.status(500).json({ message: "Server Error: " + e });
   }
 
-  return res.status(201).json({ message: "Service created successfully" })
 }
