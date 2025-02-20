@@ -31,7 +31,7 @@ const Skills = () => {
         'authorization': 'Bearer ' + localStorage.getItem('token')
       }
     }).then(res => {
-      if (res.status === 200) {
+      if (res.status === 201) {
         setUser(res?.data?.user)
         toast.success('Skill added successfully!')
       }

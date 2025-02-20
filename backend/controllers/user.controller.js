@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import updateAbout from '../services/updateAbout.service.js';
 import deleteSkill from '../services/deleteSkill.service.js';
 import addSkill from '../services/addSkill.service.js';
+import addService from '../services/addService.service.js';
 
 export const getUserDetails = async (req, res) => {
   // console.log(res.user)
@@ -163,7 +164,7 @@ export const AddSkill = async (req, res) => {
 
   try {
     const updatedUser = await addSkill(userId, skillName, skillLevel, category)
-    return res.status(200).json({ message: "skill added successfully", user: updatedUser });
+    return res.status(201).json({ message: "skill added successfully", user: updatedUser });
   } catch (err) {
     console.error('Error Adding Skill: ' + err)
     if (err.message === 'Skill already exists') {
@@ -172,4 +173,27 @@ export const AddSkill = async (req, res) => {
     return res.status(500).json({ message: "Server Error: " + err });
   }
   // console.log(userId, skillName, skillDescription)
+}
+
+export const AddService = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const userId = res.user.id;
+
+  const { serviceName, serviceDescription, serviceIcon, servicePoints } = req.body;
+  // console.log({ "userId": userId, "serviceName": serviceName, "serviceDescription": serviceDescription, "serviceIcon": serviceIcon, "servicePoints": servicePoints })
+
+  try {
+    const service = await addService(userId, serviceName, serviceDescription, serviceIcon, servicePoints)
+  } catch (e) {
+    if (e.message === "Service already exists") {
+      return res.status(406).json({ message: "Service already exists" });
+    }
+    console.error('Error Adding Service: ', e)
+    return res.status(500).json({ message: "Server Error: " + e });
+  }
+
+  return res.status(201).json({ message: "Service created successfully" })
 }
