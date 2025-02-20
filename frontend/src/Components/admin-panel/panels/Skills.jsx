@@ -104,7 +104,7 @@ const Skills = () => {
 
   const categories = Array.from(new Set(user?.skills?.map(skill => skill.category)))
 
-  // console.log(renderResult)
+  console.log(renderResult?.sort((a, b) => a.skillName.localeCompare(b.skillName)))
 
   return (
     <>
@@ -117,7 +117,7 @@ const Skills = () => {
 
           <div className="flex border-[0.025rem] gap-1 overflow-hidden text-sm outline-none mt-1 border-d-secondary rounded-md focus-within:border-l-primary focus-within:dark:border-d-primary">
             {/* categories */}
-            <select onChange={handleCategories} className='hidden outline-none sm:block bg-l-secondary px-3 py-2 dark:bg-d-secondary text-white text-sm '>
+            <select onChange={handleCategories} value={selectedSkills} className='hidden outline-none sm:block bg-l-secondary px-3 py-2 dark:bg-d-secondary text-white text-sm '>
               <option className='bg-l-secondary px-3 py-2 dark:bg-d-secondary outline-none text-sm' value='all'>All</option>
               {categories?.map(category => (
                 <option key={category} className='bg-l-secondary px-3 py-2 dark:bg-d-secondary outline-none text-sm' value={category}>{category}</option>
@@ -135,6 +135,7 @@ const Skills = () => {
             <span className='h-full my-auto text-xs cursor-pointer' onClick={() => {
               setSearchFilter('')
               setRenderResult(user?.skills)
+              setSelectedSkills('all')
             }}>Clear</span>
             <div
               onClick={handleSearch}
@@ -155,8 +156,8 @@ const Skills = () => {
         </>
 
         {/* Add Skill */}
-        <h4 className='text-sm mt-5 capitalize mb-4'>Add Skill</h4>
-        <form onSubmit={AddSkillHandler} className=''>
+        <h4 className='text-sm mt-5 capitalize '>Add Skill</h4>
+        <form onSubmit={AddSkillHandler} className='mt-1'>
           <div className="flex flex-col md:flex-row gap-3">
             {/* skillName */}
             <input
@@ -221,10 +222,10 @@ const Skills = () => {
 
 
         {/* Skills */}
-        <h4 className='text-sm mt-5 capitalize mb-4'>Skills: {selectedSkills}</h4>
+        <h4 className='text-sm mt-5 capitalize'>Skills: {selectedSkills}</h4>
 
-        <div className="flex flex-col gap-3">
-          {renderResult?.map(skill => (
+        <div className="flex flex-col mt-1 gap-3">
+          {renderResult?.sort((a, b) => a.skillName.localeCompare(b.skillName)).map(skill => (
             <div key={skill?.skillName} className='flex border-[0.025rem] text-sm py-2 px-3 rounded-md items-center'>
               <div key={skill._id} className="grid grow grid-cols-2 sm:grid-cols-3 gap-1 ">
                 <h5 className='capitalize'>{skill.skillName}</h5>

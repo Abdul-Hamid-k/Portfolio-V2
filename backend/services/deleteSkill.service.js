@@ -19,7 +19,7 @@ const deleteSkill = async (userId, skillName, skillLevel, category) => {
     },
     { new: true });
 
-  console.log('user', updatedUser.skills)
+  // console.log('user', updatedUser.skills)
   return updatedUser
 }
 
