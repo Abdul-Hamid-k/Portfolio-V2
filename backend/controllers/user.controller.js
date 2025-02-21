@@ -7,6 +7,7 @@ import updateAbout from '../services/updateAbout.service.js';
 import deleteSkill from '../services/deleteSkill.service.js';
 import addSkill from '../services/addSkill.service.js';
 import addService from '../services/addService.service.js';
+import deleteService from '../services/deleteService.service.js';
 
 export const getUserDetails = async (req, res) => {
   // console.log(res.user)
@@ -196,4 +197,22 @@ export const AddService = async (req, res) => {
     return res.status(500).json({ message: "Server Error: " + e });
   }
 
+}
+
+export const DeleteService = async (req, res) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const userId = res.user.id;
+  const { serviceName, serviceDescription, serviceIcon, servicePoints } = req.body;
+
+  try {
+    const updatedUser = await deleteService(userId, serviceName, serviceDescription, serviceIcon, servicePoints)
+    return res.status(200).json({ message: "Service deleted successfully", user: updatedUser });
+  } catch (err) {
+    console.error('Error Deleting Service: ', err)
+    return res.status(500).json({ message: "Server Error: " + err });
+  }
 }
