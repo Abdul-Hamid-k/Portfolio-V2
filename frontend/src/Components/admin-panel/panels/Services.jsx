@@ -52,7 +52,26 @@ const Services = () => {
     })
   }
 
-  const DeleteService = () => {
+  const DeleteService = (serviceName, serviceDescription, servicePoints, serviceIcon) => {
+    axios.post(import.meta.env.VITE_API_BASE_URL + '/user/delete-service', {
+      serviceName: serviceName,
+      serviceDescription: serviceDescription,
+      servicePoints: servicePoints,
+      serviceIcon: serviceIcon,
+    }, {
+      headers: {
+        'authorization': 'Bearer ' + localStorage.getItem('token')
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        toast.success('Service deleted successfully!')
+        // console.log(res)
+        setUser(res.data.user)
+      }
+    }).catch(err => {
+      console.error('Error deleting service:', err)
+      toast.error('Error deleting service')
+    })
   }
 
 
@@ -116,7 +135,7 @@ const Services = () => {
 
           <button
             className='mt-4 bg-l-primary dark:bg-d-primary text-d-primary dark:text-l-primary px-5 py-2 rounded-md font-medium cursor-pointer'>
-            Add Skill
+            Add Service
           </button>
 
         </form>
@@ -145,7 +164,7 @@ const Services = () => {
               </div>
 
               <div className="justify-self-end">
-                <i onClick={() => DeleteService()} className="ri-delete-bin-fill cursor-pointer text-red-500 text-base"></i>
+                <i onClick={() => DeleteService(service.serviceName, service.serviceDescription, service.servicePoints, service.serviceIcon)} className="ri-delete-bin-fill cursor-pointer text-red-500 text-base"></i>
               </div>
             </div>
           )}
