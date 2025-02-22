@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserDataContext } from '../../../context/UserContext'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
+import ConfirmPopUp from '../ConfirmPopUp'
 
 const Skills = () => {
   const [searchFilter, setSearchFilter] = useState('')
@@ -10,6 +11,10 @@ const Skills = () => {
   const [skillName, setSkillName] = useState('')
   const [skillLevel, setSkillLevel] = useState('')
   const [category, setCategory] = useState('')
+  const [isConfirmPanleOpen, setIsConfirmPanelOpen] = useState(false)
+  const [confirmed, setConfirmed] = useState(false)
+  const [confirmFunction, setConfirmFunction] = useState(null)
+  const [functionProps, setFunctionProps] = useState({})
 
   const { user, setUser } = useContext(UserDataContext)
 
@@ -17,11 +22,18 @@ const Skills = () => {
   useEffect(() => {
     setSearchFilter('')
     setRenderResult(user?.skills)
+    setConfirmFunction(null)
+    setIsConfirmPanelOpen(false)
+    setConfirmed(false)
   }, [user])
 
-  const AddSkillHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
+    setIsConfirmPanelOpen(true)
+    setConfirmFunction('AddSkillHandler')
+  }
 
+  const AddSkillHandler = () => {
     axios.post(import.meta.env.VITE_API_BASE_URL + '/user/add-skill', {
       skillName: skillName,
       skillLevel: skillLevel,
@@ -51,8 +63,14 @@ const Skills = () => {
   }
 
   // console.log(import.meta.env.VITE_API_BASE_URL + '/user/delete-skill')
-
   const DeleteSkillHandler = (skillName, skillLevel, category) => {
+    setIsConfirmPanelOpen(true)
+    setConfirmFunction('DeleteSkillHandler')
+    setFunctionProps({ skillName, skillLevel, category })
+  }
+ 
+  const DeleteSkill = ({ skillName, skillLevel, category }) => {
+    console.log(skillName, skillLevel, category)
     axios.post(import.meta.env.VITE_API_BASE_URL + '/user/delete-skill', {
       skillName: skillName,
       skillLevel: skillLevel,
@@ -64,6 +82,7 @@ const Skills = () => {
     }).then(res => {
       if (res.status === 200) {
         setUser(res?.data?.user)
+        console.log(res?.data?.user.skills)
         toast.success('Skill deleted successfully!')
       }
     }).catch(err => {
@@ -103,13 +122,54 @@ const Skills = () => {
   }
 
   const categories = Array.from(new Set(user?.skills?.map(skill => skill.category)))
+  const messageAdd = ` You want to Add Skill, with following details \n
+  SkillName: ${skillName},
+  SkillLevel: ${skillLevel},
+  Category: ${category}
+  `
 
-  console.log(renderResult?.sort((a, b) => a.skillName.localeCompare(b.skillName)))
+  const messageDelete = ` You want to Delete Skill `
+
+  // console.log(renderResult?.sort((a, b) => a.skillName.localeCompare(b.skillName)))
 
   return (
     <>
       <h3 className='font-medium'>Skills</h3>
       <ToastContainer />
+      {isConfirmPanleOpen && (
+        <>
+          {
+            confirmFunction === "AddSkillHandler" && (
+              <>
+                {console.log("AddSkillHandler-inner")}
+                <ConfirmPopUp
+                  setConfirmed={setConfirmed}
+                  confirmed={confirmed}
+                  setIsConfirmPanelOpen={setIsConfirmPanelOpen}
+                  updateFunction={AddSkillHandler}
+                  message={messageAdd} />
+              </>
+            )
+          }
+          {
+
+            confirmFunction === "DeleteSkillHandler" && (
+              <>
+                {console.log("DeleteSkillHandler-inner")}
+
+                <ConfirmPopUp
+                  setConfirmed={setConfirmed}
+                  confirmed={confirmed}
+                  setIsConfirmPanelOpen={setIsConfirmPanelOpen}
+                  updateFunction={DeleteSkill}
+                  functionProps={functionProps}
+                  message={messageDelete} />
+              </>
+            )
+          }
+        </>
+      )}
+
       <div className="px-5 py-6 dark:bg-l-secondary bg-d-secondary/12 rounded-2xl mt-5">
         {/* Filters */}
         <>
@@ -157,7 +217,7 @@ const Skills = () => {
 
         {/* Add Skill */}
         <h4 className='text-sm mt-5 capitalize '>Add Skill</h4>
-        <form onSubmit={AddSkillHandler} className='mt-1'>
+        <form onSubmit={(e) => handleSubmit(e)} className='mt-1'>
           <div className="flex flex-col md:flex-row gap-3">
             {/* skillName */}
             <input
@@ -213,7 +273,7 @@ const Skills = () => {
 
           </div>
           <button
-            onClick={(e) => AddSkillHandler(e)}
+            type='submit'
             className='mt-4 bg-l-primary dark:bg-d-primary text-d-primary dark:text-l-primary px-5 py-2 rounded-md font-medium cursor-pointer'>
             Add Skill
           </button>
@@ -234,7 +294,10 @@ const Skills = () => {
 
               </div>
               <div className="justify-self-end">
-                <i onClick={() => DeleteSkillHandler(skill.skillName, skill.skillLevel, skill.category)} className="ri-delete-bin-fill cursor-pointer text-red-500 text-base"></i>
+                <i
+                  // onClick={() => DeleteSkill(skill.skillName, skill.skillLevel, skill.category)}
+                  onClick={() => DeleteSkillHandler(skill.skillName, skill.skillLevel, skill.category)}
+                  className="ri-delete-bin-fill cursor-pointer text-red-500 text-base"></i>
               </div>
             </div>
           ))}

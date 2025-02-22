@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserDataContext } from '../../../context/UserContext'
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios'
+import ConfirmPopUp from '../ConfirmPopUp';
 
 
 const Dashboard = () => {
-  const [name, setName] = useState("")
+
+  const [name, setName] = useState('')
   const [userImg, setUserImg] = useState(null)
   const [instaURL, setInstaURL] = useState('')
   const [linkedInURL, setLinkedInURL] = useState('')
@@ -13,7 +15,10 @@ const Dashboard = () => {
   const [heading, setHeading] = useState('')
   const [content, setcontent] = useState('')
   const [imgName, setimgName] = useState('')
+  const [isConfirmPanleOpen, setIsConfirmPanelOpen] = useState(false)
+  const [confirmed, setConfirmed] = useState(false)
 
+  
   const { user, setUser } = useContext(UserDataContext)
 
   const imagePreviewHandler = (e) => {
@@ -22,9 +27,12 @@ const Dashboard = () => {
     setimgName(URL.createObjectURL(e.target.files[0]))
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
+    setIsConfirmPanelOpen(true)
+  }
 
+  const UpdateDashboard = () => {
     const userdataUpdateTo = {
       // userId: user._id,
       name: name,
@@ -61,14 +69,32 @@ const Dashboard = () => {
     setGithubURL(user?.githubURL)
     setHeading(user?.homeHeading)
     setcontent(user?.homeContent)
+    setConfirmed(false)
+    setIsConfirmPanelOpen(false)
   }, [user])
 
+  const message = ` You want to update Dashboard, with following details \n
+  Name: ${name} \n
+  Instagram URL: ${instaURL} \n
+  LinkedIn URL: ${linkedInURL} \n
+  Github URL: ${githubURL} \n
+  Heading: ${heading} \n
+  Content: ${content} \n
+  `
 
   return (
     <>
       <h3 className='font-medium'>Dashboard</h3>
+      {isConfirmPanleOpen && <ConfirmPopUp
+        setConfirmed={setConfirmed}
+        confirmed={confirmed}
+        setIsConfirmPanelOpen={setIsConfirmPanelOpen}
+        updateFunction={UpdateDashboard}
+        message={message} />}
+
       <ToastContainer />
-      <form onSubmit={handleSubmit} className='px-5 py-6 dark:bg-l-secondary bg-d-secondary/12 rounded-2xl mt-5 '>
+
+      <form onSubmit={(e) => handleSubmit(e)} className='px-5 py-6 dark:bg-l-secondary bg-d-secondary/12 rounded-2xl mt-5 '>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
           {/* image */}
           <div className="flex flex-col gap-1 row-span-2">

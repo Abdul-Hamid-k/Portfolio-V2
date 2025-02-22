@@ -2,25 +2,34 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserDataContext } from '../../../context/UserContext'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
+import ConfirmPopUp from '../ConfirmPopUp'
 
 const Services = () => {
   const [serviceName, setServiceName] = useState('')
   const [serviceDescription, setServiceDescription] = useState('')
   const [servicePoints, setServicePoints] = useState('')
   const [serviceIcon, setServiceIcon] = useState('')
+  const [isConfirmPanleOpen, setIsConfirmPanelOpen] = useState(false)
+  const [confirmed, setConfirmed] = useState(false)
+  const [confirmFunction, setConfirmFunction] = useState(null)
+  const [functionProps, setFunctionProps] = useState({})
 
   const { user, setUser } = useContext(UserDataContext)
 
 
   useEffect(() => {
-    // setExperienceMonths(user.experienceMonths)
-    // setExperienceYear(user.experienceYears)
-    // setAboutSummary(user.aboutSummary)
-    // setResumeFile(user.resumeFile)
+    setConfirmFunction(null)
+    setIsConfirmPanelOpen(false)
+    setConfirmed(false)
   }, [user])
 
-  const AddService = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
+    setIsConfirmPanelOpen(true)
+    setConfirmFunction('AddService')
+  }
+
+  const AddService = () => {
     // console.log(import.meta.env.VITE_API_BASE_URL + '/user/add-service')
 
     axios.post(import.meta.env.VITE_API_BASE_URL + '/user/add-service', {
@@ -52,7 +61,13 @@ const Services = () => {
     })
   }
 
-  const DeleteService = (serviceName, serviceDescription, servicePoints, serviceIcon) => {
+  const DeleteServiceHandler = (serviceName, serviceDescription, servicePoints, serviceIcon) => {
+    setIsConfirmPanelOpen(true)
+    setConfirmFunction('DeleteServiceHandler')
+    setFunctionProps({ serviceName, serviceDescription, servicePoints, serviceIcon })
+  }
+
+  const DeleteService = ({ serviceName, serviceDescription, servicePoints, serviceIcon }) => {
     axios.post(import.meta.env.VITE_API_BASE_URL + '/user/delete-service', {
       serviceName: serviceName,
       serviceDescription: serviceDescription,
@@ -74,6 +89,15 @@ const Services = () => {
     })
   }
 
+  const messageAdd = ` You want to Add Skill, with following details \n
+  ServiceName: ${serviceName},
+  serviceDescription: ${serviceDescription},
+  servicePoints: ${servicePoints},
+  serviceIcon: ${serviceIcon}
+  `
+
+  const messageDelete = ` You want to Delete Service `
+
 
 
   // console.log(user?.services)
@@ -82,11 +106,48 @@ const Services = () => {
     <>
       <h3 className='font-medium'>Services</h3>
       <ToastContainer />
+
+      <ToastContainer />
+      {isConfirmPanleOpen && (
+        <>
+          {
+            confirmFunction === "AddService" && (
+              <>
+                {console.log("AddService-inner")}
+                <ConfirmPopUp
+                  setConfirmed={setConfirmed}
+                  confirmed={confirmed}
+                  setIsConfirmPanelOpen={setIsConfirmPanelOpen}
+                  updateFunction={AddService}
+                  setConfirmFunction={setConfirmFunction}
+                  message={messageAdd} />
+              </>
+            )
+          }
+          {
+
+            confirmFunction === "DeleteServiceHandler" && (
+              <>
+                {console.log("DeleteServiceHandler-inner")}
+
+                <ConfirmPopUp
+                  setConfirmed={setConfirmed}
+                  confirmed={confirmed}
+                  setIsConfirmPanelOpen={setIsConfirmPanelOpen}
+                  updateFunction={DeleteService}
+                  functionProps={functionProps}
+                  message={messageDelete} />
+              </>
+            )
+          }
+        </>
+      )}
+
       <div className='px-5 py-6 dark:bg-l-secondary bg-d-secondary/12 rounded-2xl mt-5 '>
 
         {/* Add Services */}
         <h4 className='text-sm '>Add Service</h4>
-        <form onSubmit={(e) => AddService(e)} className=''>
+        <form onSubmit={(e) => handleSubmit(e)} className=''>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-1">
             {/* serviceName */}
             <input
@@ -164,7 +225,9 @@ const Services = () => {
               </div>
 
               <div className="justify-self-end">
-                <i onClick={() => DeleteService(service.serviceName, service.serviceDescription, service.servicePoints, service.serviceIcon)} className="ri-delete-bin-fill cursor-pointer text-red-500 text-base"></i>
+                <i
+                  onClick={() => DeleteServiceHandler(service.serviceName, service.serviceDescription, service.servicePoints, service.serviceIcon)}
+                  className="ri-delete-bin-fill cursor-pointer text-red-500 text-base"></i>
               </div>
             </div>
           )}
