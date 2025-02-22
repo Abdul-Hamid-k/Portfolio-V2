@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserDataContext } from '../../../context/UserContext'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
+import ConfirmPopUp from '../ConfirmPopUp'
 
 const About = () => {
   const [experienceYear, setExperienceYear] = useState(0)
   const [experienceMonths, setExperienceMonths] = useState(0)
   const [aboutSummary, setAboutSummary] = useState('')
   const [resumeFile, setResumeFile] = useState('')
-
+  const [isConfirmPanleOpen, setIsConfirmPanelOpen] = useState(false)
+  const [confirmed, setConfirmed] = useState(false)
   const { user, setUser } = useContext(UserDataContext)
 
   const resumePreviewHandler = (e) => {
@@ -21,10 +23,16 @@ const About = () => {
     setExperienceYear(user.experienceYears)
     setAboutSummary(user.aboutSummary)
     setResumeFile(user.resumeFile)
+    setConfirmed(false)
+    setIsConfirmPanelOpen(false)
   }, [user])
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setIsConfirmPanelOpen(true)
+  }
+
+  const updateAbout = () => {
 
     axios.post(import.meta.env.VITE_API_BASE_URL + '/user/update-about', {
       // userId: user._id,
@@ -46,13 +54,26 @@ const About = () => {
     });
   }
 
+  const message = ` You want to update About Me, with following details 
+  
+  Experience Years: ${experienceYear} \n 
+  Experience Months: ${experienceMonths} \n
+  About Summary: ${aboutSummary} `
+
 
 
   return (
     <>
       <h3 className='font-medium'>About Me</h3>
       <ToastContainer />
-      <form onSubmit={handleSubmit} className='px-5 py-6 dark:bg-l-secondary bg-d-secondary/12 rounded-2xl mt-5 '>
+      {isConfirmPanleOpen && <ConfirmPopUp
+        setConfirmed={setConfirmed}
+        confirmed={confirmed}
+        setIsConfirmPanelOpen={setIsConfirmPanelOpen}
+        updateFunction={updateAbout}
+        message={message} />}
+
+      <form onSubmit={(e) => handleSubmit(e)} className='px-5 py-6 dark:bg-l-secondary bg-d-secondary/12 rounded-2xl mt-5 '>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
 
           {/* experienceYear */}
@@ -117,7 +138,9 @@ const About = () => {
 
         </div>
 
-        <button className='mt-5 bg-l-primary dark:bg-d-primary text-d-primary dark:text-l-primary w-full sm:w-1/2 px-5 py-3 rounded-md font-medium cursor-pointer'>
+        <button
+          type='submit'
+          className='mt-5 bg-l-primary dark:bg-d-primary text-d-primary dark:text-l-primary w-full sm:w-1/2 px-5 py-3 rounded-md font-medium cursor-pointer'>
           Update
         </button>
       </form>
